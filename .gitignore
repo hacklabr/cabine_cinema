@@ -1,0 +1,16 @@
+*~
+*.pyc
+sqlite.db
+Session.vim
+*.swp
+*.log
+env
+cozinha-env
+nbproject
+.idea
+*.swp
+settings_local.py
+*.vim
+.project
+.pydevproject
+.settings
