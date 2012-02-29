@@ -1,0 +1,9 @@
+<html>
+    <head>
+    </head>
+    <body>
+        {% for clip in clips %}
+        {{clip.name}} <a href='#' id='clip-{{clip.id}}' >play</a> <br>
+        {% endfor %}
+    </body>
+</html>

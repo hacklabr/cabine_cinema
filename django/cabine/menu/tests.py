@@ -1,16 +1,18 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
+from menu import *
 
+class ClipTest(TestCase):
+    def setUp(self):
+        self.proj = Clip.objects.create(name = 'teste',
+                                           position = 1,
+                                           file_path = "/home/hacklab/teste.avi",
+                                           genre = Genre(),
+                                           director = Director(),
+                                           writer = Writer(),
+                                           stars = Stars(),
+                                           year = Year(),
+                                           description = "fuuu")
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+class GenreTest(TestCase):
+    def setUp(self):
+        pass
