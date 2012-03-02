@@ -1,5 +1,17 @@
 <html>
     <head>
+        <script src='/static/js/jquery-1.7.1.min.js'></script>
+        <script>
+        $(document).ready(function() {
+            $("[id*=clip-]").each(function() {
+                $(this).click(function(){ 
+                    $.ajax({
+                        url:"/enqueue/"+this.id.split('-')[1]
+                    });
+                }); 
+            }); 
+        });
+        </script>
     </head>
     <body>
         {% for clip in clips %}
