@@ -13,6 +13,7 @@ class Clip(models.Model):
     country = models.ForeignKey('Country', null=True, blank=True, verbose_name='País')
     year = models.ForeignKey('Year',null=True, blank=True, verbose_name='Ano de lançamento')
     star = models.ManyToManyField('Star', null=True, blank=True, verbose_name='Estrelas')
+    cover = models.FileField(upload_to='cover')
     
     def __unicode__(self):
         return self.name
