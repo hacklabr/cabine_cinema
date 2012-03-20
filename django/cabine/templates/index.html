@@ -1,5 +1,22 @@
 <html>
     <head>
+    	<style>
+    		body {
+    			background: #111111;
+    		}
+    		.clip-box {
+    			background: #eeeecc;
+    			width: 310px;
+    			height: 800px;
+    			float: left;
+    			padding: 30px;
+    			margin-left: 10px;
+    			margin-right: 10px;
+    			margin-bottom: 10px;
+    			margin-top: 10px;
+    		}
+    		
+    	</style>
         <script src='/static/js/jquery-1.7.1.min.js'></script>
         <script>
         $(document).ready(function() {
@@ -15,7 +32,35 @@
     </head>
     <body>
         {% for clip in clips %}
-        {{clip.name}} <a href='#' id='clip-{{clip.id}}' >play</a> <br>
+        	<div id="clip-{{clip.id}}" class="clip-box">
+        		<h1>{{clip.name}}</h1>
+        		<h3>"{{clip.orig_name}}" - <a href="#country">{{clip.country}}</a> <a href="#year">{{clip.year}}</a></h3>
+        		{% if clip.genre.all %}
+        		<h6>gênero: {% for genre in clip.genre.all %}
+        				<a href="#genre">{{genre}}</a>
+        			{% endfor %}
+        		</h6>
+        		{% endif %}
+        		<div><img width=300 src="{{clip.cover.url}}"></div>
+        		<h6>{{clip.sinopse}}</h6>
+        		
+        		{% if clip.director.all %}
+        		<h6>
+        			diretor: {% for diretor in clip.director.all %}
+        				<a href="#ator">{{diretor}}</a>
+        			{% endfor %}
+        		
+        		</h6>
+        		{% endif %}
+        		
+        		{% if clip.star.all %}
+        		<h6>atores: {% for ator in clip.star.all %}
+        				<a href="#ator">{{ator}}</a>
+        			{% endfor %}
+        		</h6>
+        		{% endif %}
+        		<a href='#' id='clip-{{clip.id}}' >play</a>
+        	</div>
         {% endfor %}
     </body>
 </html>
