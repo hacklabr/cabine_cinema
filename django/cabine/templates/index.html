@@ -5,7 +5,8 @@
     			background: #111111;
     		}
     		.clip-box {
-    			background: #eeeecc;
+    			background: #eeeeee;
+    			color: #333333;
     			width: 310px;
     			height: 800px;
     			float: left;
@@ -14,10 +15,23 @@
     			margin-right: 10px;
     			margin-bottom: 10px;
     			margin-top: 10px;
+    			box-shadow: 7px 7px 7px 7px #818181;
     		}
+    		.drop-area {
+    			background: #00ff00;
+    			width: 250px;
+    			height: 600px;
+    			top: 30px;
+    			right: 0px;
+				position: fixed;
+				opacity: 0.1;
+				
+    		}
+
     		
     	</style>
         <script src='/static/js/jquery-1.7.1.min.js'></script>
+        <script src='http://code.jquery.com/ui/1.8.18/jquery-ui.min.js'></script>
         <script>
         $(document).ready(function() {
             $("[id*=clip-]").each(function() {
@@ -26,11 +40,18 @@
                         url:"/enqueue/"+this.id.split('-')[1]
                     });
                 }); 
-            }); 
+            });
+            $("[id*=clip-]").draggable({containment: 'parent', opacity: 0.7, helper: "clone"});
+            $("#droparea").droppable({drop: function(event, ui){
+            	alert(ui.draggable.attr('id'));
+            	}})
         });
         </script>
     </head>
     <body>
+    	<div id="droparea" class="drop-area">
+        		<h1>Arraste aqui !</h1>
+        </div>
         {% for clip in clips %}
         	<div id="clip-{{clip.id}}" class="clip-box">
         		<h1>{{clip.name}}</h1>
@@ -62,5 +83,6 @@
         		<a href='#' id='clip-{{clip.id}}' >play</a>
         	</div>
         {% endfor %}
+
     </body>
 </html>
