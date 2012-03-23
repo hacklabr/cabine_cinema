@@ -1,4 +1,10 @@
-# Django settings for cabine project.
+import os
+import string
+print os.path.realpath(__file__)
+
+path= os.path.realpath(__file__).split('/')
+path.pop()
+path = string.join(path,"/")+"/"
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -12,7 +18,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/home/liquuid/devel/cabine_cinema/django/cabine/db.sqlite3',   # Or path to database file if using sqlite3.
+        'NAME': '%s/db.sqlite3' % path,   # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -45,7 +51,7 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/liquuid/devel/cabine_cinema/django/cabine/media/'
+MEDIA_ROOT = '/%s/media/' % path
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -56,7 +62,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/liquuid/devel/cabine_cinema/django/cabine/static/'
+STATIC_ROOT = '/%s/static/' % path
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -72,7 +78,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/home/liquuid/devel/cabine_cinema/django/cabine/menu/static/",
+    "/%s/menu/static/" % path,
 )
 
 # List of finder classes that know how to find static files in
@@ -107,7 +113,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/liquuid/devel/cabine_cinema/django/cabine/templates'
+    '/%s/templates' % path
 )
 
 INSTALLED_APPS = (
@@ -147,3 +153,4 @@ LOGGING = {
         },
     }
 }
+
