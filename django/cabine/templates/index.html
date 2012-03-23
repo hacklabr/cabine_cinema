@@ -7,10 +7,10 @@
     		.clip-box {
     			background: #eeeeee;
     			color: #333333;
-    			width: 310px;
-    			height: 800px;
+    			width: 155px;
+    			height: 330px;
     			float: left;
-    			padding: 30px;
+    			padding: 10px;
     			margin-left: 10px;
     			margin-right: 10px;
     			margin-bottom: 10px;
@@ -19,7 +19,7 @@
     		}
     		.drop-area {
     			background: #00ff00;
-    			width: 250px;
+    			width: 20%;
     			height: 600px;
     			top: 30px;
     			right: 0px;
@@ -27,11 +27,24 @@
 				opacity: 0.1;
 				
     		}
+    		#top-menu {
+    			color: #ffffff;
+    			background: #ff0000;
+    			position: fixed;
+    			width: 100%;
+    		}
+    		#clip-list{
+    			background: #ff00ee;
+    			width: 80%;
+    			overflow: scroll;
+    			
+    		}
 
     		
     	</style>
         <script src='/static/js/jquery-1.7.1.min.js'></script>
-        <script src='http://code.jquery.com/ui/1.8.18/jquery-ui.min.js'></script>
+        <script src='/static/js/jquery-ui.min.js'></script>
+        <script src='/static/js/jquery.quicksand.js'></script>
         <script>
         $(document).ready(function() {
             $("[id*=clip-]").each(function() {
@@ -41,7 +54,7 @@
                     });
                 }); 
             });
-            $("[id*=clip-]").draggable({containment: 'parent', opacity: 0.7, helper: "clone"});
+            $("[id*=clip-]").draggable({ opacity: 0.7, helper: "clone"});
             $("#droparea").droppable({drop: function(event, ui){
             	alert(ui.draggable.attr('id'));
             	}})
@@ -49,40 +62,56 @@
         </script>
     </head>
     <body>
-    	<div id="droparea" class="drop-area">
+  		  	<div id="top-menu" class="top-menu">
         		<h1>Arraste aqui !</h1>
-        </div>
-        {% for clip in clips %}
-        	<div id="clip-{{clip.id}}" class="clip-box">
-        		<h1>{{clip.name}}</h1>
-        		<h3>"{{clip.orig_name}}" - <a href="#country">{{clip.country}}</a> <a href="#year">{{clip.year}}</a></h3>
-        		{% if clip.genre.all %}
-        		<h6>gênero: {% for genre in clip.genre.all %}
-        				<a href="#genre">{{genre}}</a>
-        			{% endfor %}
-        		</h6>
-        		{% endif %}
-        		<div><img width=300 src="{{clip.cover.url}}"></div>
-        		<h6>{{clip.sinopse}}</h6>
+    	    </div>
+
+			<div id="clip-list" class="clip-list">
+   		    	{% for clip in clips %}
+        		<div id="clip-{{clip.id}}" class="clip-box">
+        			<h4>{{clip.name}}</h4>
+	        		<!-- <h6>"{{clip.orig_name}}" - <a href="#country">{{clip.country}}</a> <a href="#year">{{clip.year}}</a></h6>
+    	    		{% if clip.genre.all %}
+        			<h6>gênero: {% for genre in clip.genre.all %}
+        					<a href="#genre">{{genre}}</a>
+        				{% endfor %}
+	        		</h6>
+    	    		{% endif %} -->
+        			<div><img width=150 src="{{clip.cover.url}}"></div>
+        			<!--
+        			<h6>{{clip.sinopse}}</h6>
         		
-        		{% if clip.director.all %}
-        		<h6>
-        			diretor: {% for diretor in clip.director.all %}
-        				<a href="#ator">{{diretor}}</a>
-        			{% endfor %}
+	        		{% if clip.director.all %}
+    	    		<h6>
+        				diretor: {% for diretor in clip.director.all %}
+        					<a href="#ator">{{diretor}}</a>
+        				{% endfor %}
         		
-        		</h6>
-        		{% endif %}
-        		
-        		{% if clip.star.all %}
-        		<h6>atores: {% for ator in clip.star.all %}
-        				<a href="#ator">{{ator}}</a>
-        			{% endfor %}
-        		</h6>
-        		{% endif %}
-        		<a href='#' id='clip-{{clip.id}}' >play</a>
-        	</div>
-        {% endfor %}
+	        		</h6>
+    	    		{% endif %}
+        			
+        			{% if clip.star.all %}
+        			<h6>atores: {% for ator in clip.star.all %}
+        					<a href="#ator">{{ator}}</a>
+        				{% endfor %}
+        			</h6>
+        			{% endif %}-->
+        			<a href='#' id='clip-{{clip.id}}' >play</a>
+	        	</div>
+    	    	{% endfor %}
+    	    </div>
+    	    <div id="droparea" class="drop-area">
+        		<h1>Arraste aqui !</h1>
+    	    </div>
+   		  	<div id="droparea" class="drop-area">
+        		<h1>Arraste aqui !</h1>
+    	    </div>
+   		  	<div id="droparea" class="drop-area">
+        		<h1>Arraste aqui !</h1>
+    	    </div>
+    	   	<div id="droparea" class="drop-area">
+        		<h1>Arraste aqui !</h1>
+    	    </div>
 
     </body>
 </html>

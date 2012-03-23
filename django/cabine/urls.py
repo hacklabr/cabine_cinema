@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'menu.views.index', name='index'),
+    url(r'^clips/(?P<order>.*)/?$', 'menu.views.clips'),
     url(r'^enqueue/(?P<clip_id>\d+)/?$', 'menu.views.enqueue'),
     
     url(r'^admin/', include(admin.site.urls)),
