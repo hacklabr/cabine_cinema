@@ -17,6 +17,8 @@
     			margin-top: 10px;
     			box-shadow: 7px 7px 7px 7px #818181;
     		}
+    		.clip-box .asdf { position:relative; }
+    		.clip-box .info { position:absolute; bottom:0; right:0; }
     		.drop-area {
     			background: #00ff00;
     			width: 20%;
@@ -62,10 +64,10 @@
         </script>
     </head>
     <body>
-  		  	<div id="top-menu" class="top-menu">
+  		  	<!-- <div id="top-menu" class="top-menu">
         		<h1>Arraste aqui !</h1>
     	    </div>
-
+			-->
 			<div id="clip-list" class="clip-list">
    		    	{% for clip in clips %}
         		<div id="clip-{{clip.id}}" class="clip-box">
@@ -77,7 +79,11 @@
         				{% endfor %}
 	        		</h6>
     	    		{% endif %} -->
-        			<div><img width=150 src="{{clip.cover.url}}"></div>
+        			<div class="asdf">
+        				<img width="150" src="{{clip.cover.url}}">
+        				<a href='#' id='clip-{{clip.id}}' class="info">play</a>
+        				
+        			</div>
         			<!--
         			<h6>{{clip.sinopse}}</h6>
         		
@@ -96,13 +102,14 @@
         				{% endfor %}
         			</h6>
         			{% endif %}-->
-        			<a href='#' id='clip-{{clip.id}}' >play</a>
+        			
 	        	</div>
     	    	{% endfor %}
     	    </div>
     	    <div id="droparea" class="drop-area">
         		<h1>Arraste aqui !</h1>
     	    </div>
+    	    <!--
    		  	<div id="droparea" class="drop-area">
         		<h1>Arraste aqui !</h1>
     	    </div>
@@ -112,6 +119,6 @@
     	   	<div id="droparea" class="drop-area">
         		<h1>Arraste aqui !</h1>
     	    </div>
-
+			-->
     </body>
 </html>
