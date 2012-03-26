@@ -6,7 +6,11 @@ import json
 
 def index(request):
     clips = Clip.objects.all()
-
+    clips_all = clips
+    clips_year = clips.order_by('year')
+    clips_director = clips.order_by('director')
+    clips_genre = clips.order_by('genre')
+    
     return render_to_response('index.html', locals())
 
 def enqueue(request, clip_id):

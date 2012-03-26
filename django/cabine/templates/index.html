@@ -16,29 +16,53 @@
     			margin-bottom: 10px;
     			margin-top: 10px;
     			box-shadow: 7px 7px 7px 7px #818181;
+    			z-index: 10;
+    		
     		}
     		.clip-box .asdf { position:relative; }
     		.clip-box .info { position:absolute; bottom:0; right:0; }
-    		.drop-area {
+    		#drop-area {
     			background: #00ff00;
     			width: 20%;
-    			height: 600px;
-    			top: 30px;
+    			height: 400px;
+    			top: 300px;
     			right: 0px;
+				/*opacity: 0.1;*/
+				float: right;
 				position: fixed;
-				opacity: 0.1;
-				
     		}
+    		#status {
+    			background: #00f0f0;
+    			width: 20%;
+    			height: 200px;
+    			top: 100px;
+    			right: 0px;
+				/*opacity: 0.1;*/
+				float: right;
+				position: fixed;
+    		}
+    		
     		#top-menu {
     			color: #ffffff;
     			background: #ff0000;
-    			position: fixed;
     			width: 100%;
+    			float: left;
+    			/*border-bottom: 1px solid #999;*/
+    			position: fixed;
+    			height: 90px;
+    			/*opacity: 0.1;*/
+    			z-index: 0;
+    			
     		}
     		#clip-list{
+    			padding-top: 70px;
     			background: #ff00ee;
-    			width: 80%;
-    			overflow: scroll;
+    			width: 79%;
+    			overflow: hidden;
+    			float: left;
+    			margin: 92px 0 0 0;
+    			z-index: 1;
+    			position: fixed;
     			
     		}
 
@@ -49,6 +73,8 @@
         <script src='/static/js/jquery.quicksand.js'></script>
         <script>
         $(document).ready(function() {
+        	$("#clip-director").hide()
+        	$("#clip-year").hide()
             $("[id*=clip-]").each(function() {
                 $(this).click(function(){ 
                     $.ajax({
@@ -57,7 +83,7 @@
                 }); 
             });
             $("[id*=clip-]").draggable({ opacity: 0.7, helper: "clone"});
-            $("#droparea").droppable({drop: function(event, ui){
+            $("#drop-area").droppable({drop: function(event, ui){
             	alert(ui.draggable.attr('id'));
             	}})
         });
@@ -69,21 +95,23 @@
     	    </div>
 			-->
 			<div id="clip-list" class="clip-list">
+				<ul id="clip-list">
    		    	{% for clip in clips %}
+   		    	<li>
         		<div id="clip-{{clip.id}}" class="clip-box">
         			<h4>{{clip.name}}</h4>
-	        		<!-- <h6>"{{clip.orig_name}}" - <a href="#country">{{clip.country}}</a> <a href="#year">{{clip.year}}</a></h6>
-    	    		{% if clip.genre.all %}
+	        		<!-- <h6>"{{clip.orig_name}}" - <a href="#country">{{clip.country}}</a> <a href="#year">{{clip.year}}</a></h6> -->
+    	    		<!-- {% if clip.genre.all %}
         			<h6>gênero: {% for genre in clip.genre.all %}
         					<a href="#genre">{{genre}}</a>
         				{% endfor %}
 	        		</h6>
-    	    		{% endif %} -->
+    	    		{% endif %} --> 
         			<div class="asdf">
         				<img width="150" src="{{clip.cover.url}}">
         				<a href='#' id='clip-{{clip.id}}' class="info">play</a>
         				
-        			</div>
+        			</div> 
         			<!--
         			<h6>{{clip.sinopse}}</h6>
         		
@@ -95,30 +123,61 @@
         		
 	        		</h6>
     	    		{% endif %}
-        			
-        			{% if clip.star.all %}
+        			-->
+        			<!-- {% if clip.star.all %}
         			<h6>atores: {% for ator in clip.star.all %}
         					<a href="#ator">{{ator}}</a>
         				{% endfor %}
         			</h6>
-        			{% endif %}-->
+        			{% endif %} -->
         			
+	        	</div></li>
+    	    	{% endfor %}
+    	    	</ul>
+    	    </div>
+    	    <div id="clip-year" class="clip-list">
+    	    	<ul id="clip-year">
+   		    	{% for clip in clips_year %}
+   		    	<li>
+        		<div id="clip-{{clip.id}}" class="clip-box">
+        			<h4>{{clip.name}}</h4>
+        			<div class="asdf">
+        				<img width="150" src="{{clip.cover.url}}">
+        				<a href='#' id='clip-{{clip.id}}' class="info">play</a>
+        				
+        			</div> 
 	        	</div>
+	        	</li>
+    	    	{% endfor %}
+    	    	</ul>
+    	    </div>
+    	    	<div id="clip-director" class="clip-list">
+    	    	<ul id="clip-director">
+   		    	{% for clip in clips_director %}
+   		    	<li>
+        		<div id="clip-{{clip.id}}" class="clip-box">
+        			<h4>{{clip.name}}</h4>
+        			<div class="asdf">
+        				<img width="150" src="{{clip.cover.url}}">
+        				<a href='#' id='clip-{{clip.id}}' class="info">play</a>
+        				
+        			</div>        			
+	        	</div>
+	        	</li>
     	    	{% endfor %}
     	    </div>
-    	    <div id="droparea" class="drop-area">
+    	    </ul>
+    	    <div id="top-menu">
+        		<h3>c@b1n3 d3 cin3m4</h3>
+        		filtrar: <a href="#" id="sort-year">Ano</a> <a href="#" id="sort-director">Diretor</a> <a href="#" id="sort-genre">Gênero</a>
+    	    </div>
+    	    
+   		  	<div id="status">
+        		<h1>Tocando....</h1>
+    	    </div>
+   		  	<div id="drop-area">
         		<h1>Arraste aqui !</h1>
     	    </div>
-    	    <!--
-   		  	<div id="droparea" class="drop-area">
-        		<h1>Arraste aqui !</h1>
-    	    </div>
-   		  	<div id="droparea" class="drop-area">
-        		<h1>Arraste aqui !</h1>
-    	    </div>
-    	   	<div id="droparea" class="drop-area">
-        		<h1>Arraste aqui !</h1>
-    	    </div>
-			-->
+    	   
     </body>
 </html>
