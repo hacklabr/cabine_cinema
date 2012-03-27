@@ -20,6 +20,64 @@ def enqueue(request, clip_id):
     os.system("ln -sf %s /tmp/video" % clip.file_path)
     return HttpResponse(clip.file_path)
 
+def clean_object(object_list):
+    data = []
+    for obj in object_list:
+        temp = obj.__dict__
+        temp.pop('_state')      
+        data.append(temp)
+            
+    return data
+    
+
+def genre(request, genre_id=None):
+    
+    if genre_id:
+        try:
+            objs = clean_object(Genre.objects.get(id=genre_id).clip_set.all())
+        except:
+            return HttpResponse("")
+    else:
+        objs = clean_object(Genre.objects.all())
+        
+    return HttpResponse(json.dumps(objs))
+
+def year(request, year_id=None):
+    
+    if year_id:
+        try:
+            objs = clean_object(Year.objects.get(id=year_id).clip_set.all())
+        except:
+            return HttpResponse("")
+    else:
+        objs = clean_object(Year.objects.all())
+        
+    return HttpResponse(json.dumps(objs))
+
+def director(request, director_id=None):
+    
+    if director_id:
+        try:
+            objs = clean_object(Director.objects.get(id=director_id).clip_set.all())
+        except:
+            return HttpResponse("")
+    else:
+        objs = clean_object(Director.objects.all())
+        
+    return HttpResponse(json.dumps(objs))
+
+def star(request, star_id=None):
+    
+    if star_id:
+        try:
+            objs = clean_object(Star.objects.get(id=star_id).clip_set.all())
+        except:
+            return HttpResponse("")
+    else:
+        objs = clean_object(Star.objects.all())
+        
+    return HttpResponse(json.dumps(objs))
+
 def clips(request, order=None):
     
     clips = []
