@@ -1,0 +1,117 @@
+/*
+Project Name: Cabine de Cinema
+Author: Hacklab
+Version: 1.0
+*/
+
+/* =Colors
+-------------------------------------------------------------- */
+/*
+laranja - #f7931e
+cinza claro - #b4b4b4
+cinza escuro - #333
+cinza médio - #666
+ */
+
+
+
+/* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
+-------------------------------------------------------------- */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	background: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	vertical-align: baseline;
+}
+body {
+	line-height: 1;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote {
+	quotes: none;
+}
+blockquote:before, blockquote:after {
+	content: '';
+	content: none;
+}
+del {
+	text-decoration: line-through;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a img {
+	border: none;
+}
+
+
+/* =Fonts
+-------------------------------------------------------------- */
+
+body { font: 14px/20px "Lucida Sans Unicode", "Lucida Grande", Sans-Serif; }
+h1,h2,h3,h4,h5,h6 { margin-bottom: 20px; color: #333; }
+h1 { font-size: 24px; line-height: 30px; }
+h2 { font-size: 18px; line-height: 30px; }
+h3 { font-size: 16px; }
+h4 { font-size: 14px; }
+h5 { font-size: 14px; }
+h6 { font-size: 14px; }
+
+/* =Global Elements
+-------------------------------------------------------------- */
+
+body { background: #ddd url(img/bg.png); }
+body { color: #666; text-shadow: 0 1px 0 rgba(250, 250, 250, 0.75); }
+
+
+/* =HTML5
+--------------------------------------------------------------  */
+section, article, header, footer, nav, aside, hgroup { display: block; }
+
+/* =Layout
+-------------------------------------------------------------- */
+
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.clear { clear: both; }
+.first { margin-left: 0; }
+.last { margin-right: 0; }
+
+/* Text elements */
+p {	margin-bottom: 20px; }
+strong { font-weight: bold; }
+cite, em, i { font-style: italic; }
+blockquote { font-style: italic; padding: 0 3em; color: #999; }
+blockquote cite, blockquote em, blockquote i { font-style: normal; }
+
+/* =General classes
+-------------------------------------------------------------- */
+.bottom { margin-bottom: 0 !important; padding-bottom: 0; }
+.aligncenter { display: block; margin-right: auto; margin-left: auto; clear: both; }
+.alignleft { float: left; }
+.alignright { float: right; }
+.textcenter { text-align: center; }
+.textleft { text-align: left; }
+.textright { text-align: right; }
+
+.wrap { width: 1960px; }
+#playlist, #main-section, #menu-de-cenas { float: left; }
+#playlist { width: 300px; padding: 40px; }
+#main-section { width: 1080px; padding: 40px; }
+#menu-de-cenas { width: 340px; padding: 40px 20px; }

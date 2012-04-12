@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Cabina de Cinema</title>
+        <link rel="profile" href="http://gmpg.org/xfn/11" />
+        <link rel="stylesheet" type="text/css" media="all" href="style.css" />
+    </head>
+    <body>
+		<div class="wrap clearfix">
+			<section id="playlist" class="clearfix">
+				<h1>Cabine de Cinema</h1>
+				<div class="em-cartaz">
+					<h2>Em Cartaz</h2><!-- se for a segunda da lista substituir por <h2>Próxima</h2>-->
+					<img src="img/cena-media.jpg" alt="Título do filme" />				
+					<div class="remover">
+						<p>Remover da fila?</p>
+						<a href="#">sim</a>
+						<a href="#">não</a>
+					</div>
+				</div>
+				<!-- .em-cartaz -->
+				<div class="intervalo">
+					<h2>Intervalo</h2>
+					<div class="cronometro"></div>
+					<a href="#">pause</a>
+					<a href="#">skip</a>
+				</div>
+				<!-- .intervalo -->
+				<div class="em-breve">
+					<p>Selecione uma cena ao lado</p>
+				</div>
+				<!-- .em-breve -->
+			</section>
+			<!-- #playlist -->
+			<section id="main-section" class="clearfix">
+				<header>
+					<ul id="filtros-nav" class="clearfix">
+						<li id="filmes-button" class="ativo">Filmes</li>
+						<li id="diretores-button">Diretores</li>
+						<li id="atores-button">Atores</li>
+						<li id="paises-button">Países</li>
+						<li id="generos-button">Gêneros</li>
+					</ul>
+					<!-- #filtros -->
+					<p>Escolha o filtro de sua preferência.</p>
+				</header>
+				<div id="fichas">
+					<div id="janela">
+					</div>
+					<!-- #janela -->
+					<div id="fichas-content">
+						<div class="ficha clearfix">
+							<img src="img/cena-grande.jpg" alt="Título do Filme" />
+							<div class="info">
+								<h2>Doce Vida, A</h2>
+								<p>
+									<span class="label">Título Original</span><br />
+									La dolce vita
+								</p>
+								<p>
+									<span class="label">Diretor</span><br />
+									Federico Fellini
+								</p>
+								<p>
+									<span class="label">País</span><br />
+									Itália
+								</p>
+								<p>
+									<span class="label">Ano</span><br />
+									1960
+								</p>
+								<p>
+									<span class="label">Gênero</span><br />
+									Drama
+								</p>
+								<p>
+									<span class="label">Atores</span><br />
+									Anita Ekberg e Marcello Mastroianni
+								</p>
+								<p>
+									<span class="label">Classificação Indicativa</span><br />
+									14 anos
+								</p>
+								<a class="adicionar">Colocar na Fila</a>
+							</div>
+							<!-- .info -->
+						</div>
+						<!-- .ficha -->
+					</div>
+					<!-- #fichas-content -->
+				</div>
+				<!-- #fichas -->
+				<footer>
+					<ul>
+						<li>Sobre o Projeto</li>
+						<li>Créditos</li>
+					</ul>
+				</footer>
+			</section>
+			<!-- #main-section -->
+			<section id="menu-de-cenas" class="clearfix">
+				<div id="cenas">
+					<div class="selecao"></div>
+					<div id="cenas-content">
+						<img src="img/cena-pequena.jpg" alt="" />
+					</div>
+				</div>
+			</section>
+			<!-- #menu-de-filmes -->
+		</div>
+		<!-- .wrap -->
+	</body>
+</html>
