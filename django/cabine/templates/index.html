@@ -3,30 +3,287 @@
     	<style></style>
         <script src='/static/js/jquery-1.7.1.min.js'></script>
         <script src='/static/js/jquery-ui.min.js'></script>
-        <script></script>
+        <script>
+        
+        var fazendo_contagem_regressiva = false;
+        var algo_tocando = false; // variável para testes, será substituído pelo da monitorar_fila()
+        var contagem;
+        
+        $(document).ready(function() {
+            
+            
+            $('.adicionar').click(function() {
+                
+                var clip_id = $(this).data('clipid');
+                
+                for (var i=1; i<3; i ++) {
+                
+                    if ($('#proximo_'+i).data('clip') == 0) {
+                        
+                        coloca_filme_na_caixa('#proximo_'+i, clip_id);
+                        break;
+                    }
+                
+                }
+                
+                
+                
+                return false;
+            });
+            
+            $('.em-breve').click(function() {
+                
+                var id = $(this).attr('id').replace('proximo_', '');
+                $('#remover_'+id).fadeIn();
+            
+            });
+            
+            $('.remover a').click(function() {
+                
+                $(this).parents('.remover').hide();
+                
+                if ($(this).hasClass('sim')) {
+                    var id = $(this).parents('.remover').attr('id').replace('remover_', '');
+                    remover_da_fila(id);
+                }
+                
+            
+            });
+            
+            $('#simular_fim').click(function() {
+                algo_tocando = false;
+            });
+            
+            
+            
+            
+            
+        });
+            
+        
+        
+        function monitorar_fila() {
+            console.log('monitorando');
+            // faz um ajax e checa um arquivo de texto pra saber se tem algo tocando
+            var playing = algo_tocando;
+            console.log(playing);
+            // se não tem nada tocando
+            if (!playing && !fazendo_contagem_regressiva) {
+            
+                // se tiver algo na fila
+                if ( $('#proximo_1').data('clip') != 0) {
+                
+                    // carrega contagem regressiva
+                    $('#tocando').html( $('#intervalo').html() );
+                    $('#tocando #contador_pause').click(function() {
+                        clearTimeout(contagem);
+                        $(this).hide();
+                        $('#contador_play').show();
+                    });
+                    
+                    $('#tocando #contador_play').click(function() {
+                        contagem_regressiva();
+                        $(this).hide();
+                        $('#contador_pause').show();
+                    });
+                    
+                    $('#tocando #contador_skip').click(function() {
+                        fazendo_contagem_regressiva = false;
+                        clearTimeout(contagem);
+                        anda_fila_e_toca_video();
+                    });
+                    
+                    // inicializa contagem regressiva
+                    inicia_contagem_regressiva();
+                    
+                    
+                } else {
+                // se não tiver nada na fila
+                    console.log('nada na fila');
+                    // carrega interface vazia
+                    carrega_caixas_vazias();
+                }
+            }
+            
+        }
+
+        function carrega_caixas_vazias() {
+        
+            coloca_filme_na_caixa('#proximo_1', 0);
+            coloca_filme_na_caixa('#proximo_2', 0);
+            coloca_filme_na_caixa('#tocando', 0);
+        
+        }
+        
+        function anda_fila_e_toca_video() {
+        
+            // se tiver algo na fila
+            if ( $('#proximo_1').data('clip') != 0) {
+                
+                // movimenta os videos na fila
+                coloca_filme_na_caixa('#tocando', $('#proximo_1').data('clip'));
+                coloca_filme_na_caixa('#proximo_1', $('#proximo_2').data('clip'));
+                coloca_filme_na_caixa('#proximo_2', 0);
+                
+                // dá o play no ajax
+                algo_tocando = true;
+                // Não esquecer de no ajax fazer a contagem dos plays! 
+                // Temos que fazer uma tabela de log com hora e play de todos os videos
+            
+            
+            } else {
+            // se não tiver nada na fila
+            
+                // carrega interface vazia
+                carrega_caixas_vazias();
+            }
+        
+        }
+        
+        function inicia_contagem_regressiva() {
+            
+            fazendo_contagem_regressiva = true;
+            $('#contador_pause').show();
+            $('#contador_play').hide();
+            
+            //reseta o contador
+            var c = 5;
+            $('#contador').html(c);
+            
+            // seta o timeout
+            contagem = setTimeout('contagem_regressiva()', 1000);
+            
+        }
+        
+        function contagem_regressiva() {
+        
+            // subtrai 1
+            var c = parseInt($('#contador').html());
+            c --;
+            console.log(c);
+            $('#contador').html(c);
+            
+            // se for zero
+            if (c == 0) {
+                fazendo_contagem_regressiva = false;
+                anda_fila_e_toca_video();
+                clearTimeout(contagem);
+            } else {
+                contagem = setTimeout('contagem_regressiva()', 1000);
+            }
+        
+        }
+        
+        // pasando 0 como clip_id vc vai deixar a caixa vazia
+        function coloca_filme_na_caixa(caixa, clip_id) {
+            $(caixa).html( $('#thumb-'+clip_id).html() );
+            $(caixa).data('clip', clip_id );
+        }
+        
+        
+        
+        function remover_da_fila(posicao) {
+        
+            coloca_filme_na_caixa('#proximo_'+posicao, 0);
+            
+            if (posicao == 1) {
+                coloca_filme_na_caixa('#proximo_1', $('#proximo_2').data('clip'));
+                coloca_filme_na_caixa('#proximo_2', 0);
+            }
+            
+        }
+        
+        
+        window.setInterval('monitorar_fila()', 1000);
+        
+        
+        
+        </script>
+        
+        
     </head>
     <body>
-			<div id="clip-list" class="clip-list">
-				<ul id="clip-list">
-   		    	{% for clip in clips %}
-   		    	<li id="clip-{{clip.id}}" >
-        			<h4>{{clip.name}}</h4>
-        			<div class="asdf">
-        				<img width="150" src="{{clip.cover.url}}">
-        				<a href='#' id='clip-{{clip.id}}' class="info">play</a>
-        			</div> 
-	        	</li>
-    	    	{% endfor %}
-    	    	</ul>
-    	    </div>
-    
-    	    
-   		  	<div id="status">
-        		<h1>Tocando....</h1>
-    	    </div>
-   		  	<div id="drop-area">
-        		<h1>Arraste aqui !</h1>
-    	    </div>
+            <div id="left">
+                <div id="clip-list" class="clip-list">
+                    <ul id="clip-list">
+                    {% for clip in clips %}
+                    <li id="clip-{{clip.id}}" >
+                        <h4>{{clip.name}}</h4>
+                        <div class="asdf">
+                            <img width="150" src="{{clip.cover.url}}">
+                            <a href='#' id='clip-{{clip.id}}' class="adicionar" data-clipid="{{clip.id}}">botar na fila</a>
+                        </div> 
+                    </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                
+                
+                <ul id="thumbnail-list" style="display:none;">
+                    <li id="thumb-0" ></li>
+                    {% for clip in clips %}
+                        <li id="thumb-{{clip.id}}">
+                                <img width="50" src="{{clip.cover.url}}">
+                        </li>
+                    {% endfor %}
+                </ul>
+        
+
+                
+            </div>
+            
+            <div id="right">
+                
+                
+                <div id="tocando" class="em-breve" data-clip="0">
+
+                </div>
+                
+                <div id="remover_1" class="remover" style="display:none;">Tirar? <a class="sim">Sim</a> <a  class="nao">Não</a></div>
+                <div id="proximo_1" class="em-breve" data-clip="0">
+
+                </div>
+                
+                <div id="remover_2" class="remover" style="display:none;">Tirar? <a class="sim">Sim</a> <a  class="nao">Não</a></div>
+                <div id="proximo_2" class="em-breve" data-clip="0">
+
+                </div>
+                
+                <s id="simular_fim">Simular fim do filme</a>
+
+                
+                
+            </div>
+            
+            <div id="intervalo" style="display:none;">
+            
+                <span id="contador"></span>
+                <a id="contador_pause">pause</a>
+                <a id="contador_play">play</a>
+                <a id="contador_skip">skip</a>
+            
+            </div>
+            
     	   
     </body>
+    
+    
+    <style>
+    
+    
+    .em-breve { border: 2px solid black; width: 50px; height: 100px; margin-bottom: 20px;}
+    #right { float: right; }
+    #left { float: left; }
+    
+    </style>
+    
+    <script>
+    
+    
+    
+    
+    
+    </script>
+    
+    
 </html>

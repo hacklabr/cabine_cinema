@@ -10,27 +10,41 @@
 		<div class="wrap clearfix">
 			<section id="playlist" class="clearfix">
 				<h1>Cabine de Cinema</h1>
-				<div class="em-cartaz">
+				<div class="em-cartaz" id="tocando">
 					<h2>Em Cartaz</h2><!-- se for a segunda da lista substituir por <h2>Próxima</h2>-->
 					<img src="img/cena-media.jpg" alt="Título do filme" />				
-					<div class="remover">
-						<p>Remover da fila?</p>
-						<a href="#">sim</a>
-						<a href="#">não</a>
-					</div>
 				</div>
 				<!-- .em-cartaz -->
-				<div class="intervalo">
+				<div class="intervalo" id="intervalo">
 					<h2>Intervalo</h2>
 					<div class="cronometro"></div>
-					<a href="#">pause</a>
-					<a href="#">skip</a>
+                    <div id="contador">30</div>
+                    <!-- Catia, deixe um elemento com o id "contador", e dentro dele é onde vai entar o número da contagem regressiva -->
+					<a href="#" id="contador_pause">pause</a>
+					<a href="#" id="contador_play" style="display:none;" >play</a>
+					<a href="#" id="contador_skip">skip</a>
 				</div>
 				<!-- .intervalo -->
-				<div class="em-breve">
+				
+                <div class="em-breve" id="proximo_1">
 					<p>Selecione uma cena ao lado</p>
+                    <div class="remover" id="tirar_da_fila_1">
+						<p>Remover da fila?</p>
+						<a href="#" class="sim">sim</a>
+						<a href="#" class="nao">não</a>
+					</div>
 				</div>
-				<!-- .em-breve -->
+				<!-- #proximo_1 -->
+                
+                <div class="em-breve" id="proximo_2">
+					<p>Selecione uma cena ao lado</p>
+                    <div class="remover" id="tirar_da_fila_2">
+						<p>Remover da fila?</p>
+						<a href="#" class="sim">sim</a>
+						<a href="#" class="nao">não</a>
+					</div>
+				</div>
+				<!-- #proximo_2 -->
 			</section>
 			<!-- #playlist -->
 			<section id="main-section" class="clearfix">
