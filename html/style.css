@@ -110,8 +110,97 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 .textleft { text-align: left; }
 .textright { text-align: right; }
 
-.wrap { width: 1960px; }
-#playlist, #main-section, #menu-de-cenas { float: left; }
-#playlist { width: 300px; padding: 40px; }
-#main-section { width: 1080px; padding: 40px; }
-#menu-de-cenas { width: 340px; padding: 40px 20px; }
+/* =Estrutura
+-------------------------------------------------------------- */
+.wrap { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+#playlist, #main-section, #menu-de-cenas { float: left; box-shadow: 0 0 100px rgba(0,0,0, .4) inset; overflow: hidden; }
+#playlist { width: 300px; height: 1000px; padding: 40px; }
+#main-section { width: 1080px; height: 1040px; padding: 40px 40px 0; }
+#menu-de-cenas { width: 340px; height: 1080px; padding: 0 20px; }
+
+/* =Playlist
+-------------------------------------------------------------- */
+#playlist h1 { height: 140px; text-indent: -99999px; background: url(img/logo.png) no-repeat center; }
+#tocando, #intervalo, .ocupado, .vazio { position: relative; width: 246px; height: 185px; margin-top: 47px; padding: 27px; text-align: center; color: #fff; }
+#tocando, .ocupado { background: url(img/moldura-laranja.png) no-repeat; }
+#intervalo, .vazio { background: url(img/moldura-cinza.png) no-repeat; }
+#tocando h2, #intervalo h2, .ocupado h2, .vazio h2 { position: absolute; bottom: 0; line-height: 27px; width: 246px; margin-bottom: 0; text-transform: uppercase; }
+/*intervalo*/
+#intervalo { display: none; }
+#contador_pause, #contador_play, #contador_skip { position: absolute; bottom: 47px; display: block; width: 61px; height: 61px; text-indent: -9999px; }
+#contador_pause, #contador_play { left: 69px; }
+#contador_skip { left: 170px; }
+#contador_pause { background: url(img/pause.png) no-repeat; }
+#contador_play { display: none; background: url(img/play.png) no-repeat; }
+#contador_skip { background: url(img/skip.png) no-repeat; }
+/*remover*/
+.remover { display: none; position: absolute; top: 27px; width: 246px; height: 165px; padding-top: 20px; background: rgba(0,0,0, .6); text-shadow: none; }
+.sim, .nao { display: block; float: left; width: 61px; padding-top: 70px; color: #fff; text-decoration: none; }
+.sim { margin: 0 21px 0 41px; background: url(img/sim.png) no-repeat; }
+.nao { margin: 0 41px 0 21px; background: url(img/nao.png) no-repeat; }
+/*vazio*/
+.vazio p { margin-top: 80px; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75); }
+
+/* =Main Section
+-------------------------------------------------------------- */
+/*header*/
+#main-section header { height: 199px; border-bottom: 1px solid #b4b4b4; background: url(img/sombra-up.png) no-repeat center bottom; text-align: center; }
+#filtros-nav { height: 160px; width: 1080px; margin: 0 -1px 0 -2px; border-left: 2px solid #b4b4b4; border-right: 1px solid #fff; }
+#filtros-nav li { float: left; height: 160px; width: 213px; border-right: 2px solid #b4b4b4; border-left: 1px solid #fff; }
+#filtros-nav a { display: block; width: 81px; height: 81px; margin: 20px auto; }
+#filmes-button { background: url(img/filmes.png) no-repeat; }
+#filmes-button.ativo { background: url(img/filmes-on.png) no-repeat; }
+#diretores-button { background: url(img/diretores.png) no-repeat; }
+#diretores-button.ativo { background: url(img/diretores-on.png) no-repeat; }
+#atores-button { background: url(img/atores.png) no-repeat; }
+#atores-button.ativo { background: url(img/atores-on.png) no-repeat; }
+#paises-button { background: url(img/paises.png) no-repeat; }
+#paises-button.ativo { background: url(img/paises-on.png) no-repeat; }
+#generos-button { background: url(img/generos.png) no-repeat; }
+#generos-button.ativo { background: url(img/generos-on.png) no-repeat; }
+#main-section header p { margin-bottom: 0; line-height: 39px; }
+/*fichas*/
+#fichas { position: relative; height: 778px; overflow: hidden; border-top: 1px solid #fff; border-bottom: 1px solid #b4b4b4; }
+#janela { position: absolute; top: 0; left: 0; z-index: 10; height: 778px; width: 1080px; background: url(img/janela.png) no-repeat; }
+#fichas-content { position: absolute; z-index: 5; top: -541px; }
+.ficha { width: 1080px; height: 580px; padding: 20px 0; overflow: hidden; color: #333; }
+.ficha p { margin-bottom: 10px; }
+.ficha img, .ficha .info { float: left; }
+.ficha .info { width: 270px; margin-left: 40px; padding-bottom: 60px; }
+.label { font-size: 11px; text-transform: uppercase; color: #666; }
+.adicionar { display: block; width: 269px; background: #f7931e; color: #000; text-align: center; line-height: 40px; text-transform: uppercase; border-radius: 4px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80) inset, 1px 1px 0 rgba(0, 0, 0, 0.4); }
+/*footer*/
+#main-section footer { height: 60px; border-top: 1px solid #fff; background: url(img/sombra-down.png) no-repeat center top; }
+#main-section footer li { float: right; margin-left: 5px; margin-top: -1px; padding: 0 10px; color: #333; font-size: 12px; text-align: center; background: #b4b4b4; border-radius: 0 0 4px 4px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80) inset, 1px 1px 0 rgba(0, 0, 0, 0.4); cursor: pointer; }
+
+/* =Scroller
+-------------------------------------------------------------- */
+.scroll-bar { float: left; width: 14px; padding: 1px 0; border-radius: 7px; }
+.scroll-handler { position: relative; width: 12px; margin: 0 auto; background: #f7931e; border-radius: 6px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80) inset, 1px 1px 0 rgba(0, 0, 0, 0.4); }
+
+/* =Menu de cenas
+-------------------------------------------------------------- */
+#menu-de-cenas { position: relative; text-align: center; }
+#cenas { position: relative; width: 300px; height: 1080px; overflow: hidden; margin-right: 20px; float: left; }
+#cenas-content { position: absolute; z-index: 5; top: 0; width: 300px; padding: 12px 0; background: url(img/pelicula.png) repeat-y; }
+#cenas-content img { display: block; margin: 0 auto 12px; }
+/*scroll*/
+#menu-de-cenas .scroll-bar { height: 1062px; margin: 8px 3px; background: #333; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80), 0 0 5px rgba(0, 0, 0, 0.7) inset; }
+#menu-de-cenas .scroll-handler { height: 100px; }
+.scroll-up, .scroll-down { position: absolute; z-index: 10; left: 66px; display: block; height: 34px; width: 208px; margin: auto; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80) inset, 1px 1px 0 rgba(0, 0, 0, 0.4); text-indent: -9999px; }
+.scroll-up { top: 0px; background: #f7931e url(img/up.png) no-repeat center; border-radius: 4px 4px 0 0; }
+.scroll-down { bottom: 0px; background: #f7931e url(img/down.png) no-repeat center; border-radius: 0 0 4px 4px; }
+#selecao { z-index: 10; position: absolute; top: 511px; left: 26px; width: 234px; height: 167px; background: url(img/seletor.png) no-repeat; }
+
+/* =Popup
+-------------------------------------------------------------- */
+#popup { position: absolute; z-index: 999; top: 200px; left: 410px; width: 1080px; height: 840px; background: rgba(0,0,0, .3); padding: 10px; border-radius: 16px; }
+#popup .wrap { width: 1027px; height: 793px; padding: 7px 13px 40px 40px; overflow: hidden; background: url(img/bg-branco.png); border-radius: 6px; }
+#fechar { width: 26px; height: 26px; margin: 0 0 7px 1004px; background: url(img/fechar.png) no-repeat; }
+#accordion { float: left; width: 1000px; }
+#accordion h3 { margin-bottom: 2px; padding: 0 10px; background: url(img/bg-filtros.png); border-radius: 4px; line-height: 40px; }
+#accordion h3 a { display: block; color: #fff; text-shadow: none; text-decoration: none; }
+#accordion ul { margin: 20px; }
+/*scroll*/
+#popup .scroll-bar { height: 758px; margin: 0 0 0 12px; background: #ccc; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80), 0 0 5px rgba(0, 0, 0, 0.3) inset; }
+#popup .scroll-handler { height: 100px; }
