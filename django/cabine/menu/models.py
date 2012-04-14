@@ -6,6 +6,7 @@ class Clip(models.Model):
     name = models.CharField(verbose_name='Título do filme', max_length = 300)
     orig_name = models.CharField(verbose_name='Título original do filme', max_length = 300)
     sinopse = models.TextField(null=True, blank=True, verbose_name='Sinopse')
+    classificacao = models.TextField(null=True, blank=True, verbose_name='Classificação Etária')
     position = models.IntegerField(max_length = 10, verbose_name='Posição', blank=True, null=True )
     file_path = models.CharField(verbose_name='Caminho do arquivo', max_length = 300)
     genre = models.ManyToManyField('Genre', null=True, blank=True, verbose_name='Gênero')
