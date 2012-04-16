@@ -7,3 +7,7 @@ cp db-sample/* .
 . env/bin/activate
 
 ./manage.py runserver
+
+Para importar os dados da planilha:
+
+./manage.py importcsv
