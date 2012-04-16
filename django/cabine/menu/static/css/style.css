@@ -171,6 +171,7 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 .ficha .info { width: 270px; margin-left: 40px; padding-bottom: 60px; }
 .label { font-size: 11px; text-transform: uppercase; color: #666; }
 .adicionar { display: block; width: 269px; background: #f7931e; color: #000; text-align: center; line-height: 40px; text-transform: uppercase; border-radius: 4px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80) inset, 1px 1px 0 rgba(0, 0, 0, 0.4); }
+.adicionar-inativo { background: #B4B4B4; color: #FFF; }
 /*footer*/
 #main-section footer { height: 60px; border-top: 1px solid #fff; background: url(/static/img/sombra-down.png) no-repeat center top; }
 #main-section footer li { float: right; margin-left: 5px; margin-top: -1px; padding: 0 10px; color: #333; font-size: 12px; text-align: center; background: #b4b4b4; border-radius: 0 0 4px 4px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80) inset, 1px 1px 0 rgba(0, 0, 0, 0.4); cursor: pointer; }
@@ -209,6 +210,7 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 /*scroll*/
 .popup .scroll-bar { height: 758px; margin: 0 0 0 12px; background: #ccc; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80), 0 0 5px rgba(0, 0, 0, 0.3) inset; }
 .popup .scroll-handler { height: 100px; }
+div.accordion > div { display:none; }
 
 /* =Contador
 -------------------------------------------------------------- */

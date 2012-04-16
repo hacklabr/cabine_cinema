@@ -16,7 +16,15 @@ $(document).ready(function() {
 		algo_tocando = false;
 	});
 	
-	
+	$('.accordion > h3').click(function() {
+        var button = $(this).find('div');
+        if (button.hasClass('ocultar')) {
+            button.removeClass('ocultar').addClass('exibir').parents('h3').next().slideUp();
+        } else {
+            button.removeClass('exibir').addClass('ocultar').parents('h3').next().slideDown();
+        }
+    });
+    
 	$('.adicionar').click(function() {
 		
 		var clip_id = $(this).data('clipid');
@@ -80,8 +88,10 @@ $(document).ready(function() {
 	});
 	
 	$('.fechar').click(function() {
-		$('.popup').fadeOut('fast');
-		$('.openpopup').removeClass('ativo');
+		$('.popup').fadeOut('fast', function() {
+            $('.openpopup').removeClass('ativo');
+        });
+		
 	});
 	
 	
@@ -250,7 +260,13 @@ function coloca_filme_na_caixa(caixa, clip_id) {
 			$(caixa + ' > h2').after('<p>Selecione uma cena ao lado</p>');
 		
 		$(caixa).removeClass('ocupado').addClass('vazio');
+
+        $('.adicionar').removeClass('adicionar-inativo');
 	}
+    
+    if (caixa == '#proximo_2' && clip_id > 0) {
+        $('.adicionar').addClass('adicionar-inativo');
+    }
 	
 }
 
