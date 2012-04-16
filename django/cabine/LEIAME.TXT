@@ -6,4 +6,4 @@ pip -E env install south django
 cp db-sample/* .
 . env/bin/activate
 
-./manage runserver
+./manage.py runserver
