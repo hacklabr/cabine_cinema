@@ -161,7 +161,9 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 #main-section header p { margin-bottom: 0; line-height: 39px; }
 /*fichas*/
 #fichas { position: relative; height: 778px; overflow: hidden; border-top: 1px solid #fff; border-bottom: 1px solid #b4b4b4; }
-#janela { position: absolute; top: 0; left: 0; z-index: 10; height: 778px; width: 1080px; background: url(/static/img/janela.png) no-repeat; }
+#janela-top, #janela-bottom  { position: absolute; left: 0; z-index: 10; height: 100px; width: 1080px; }
+#janela-top { top: 0; background: url(/static/img/janela-top.png) no-repeat top; }
+#janela-bottom { bottom: 0; background: url(/static/img/janela-bottom.png) no-repeat bottom; }
 #fichas-content { position: absolute; z-index: 5; top: -541px; }
 .ficha { width: 1080px; height: 580px; padding: 20px 0; overflow: hidden; color: #333; }
 .ficha p { margin-bottom: 10px; }
@@ -199,7 +201,10 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 .fechar { width: 26px; height: 26px; margin: 0 0 7px 1004px; background: url(/static/img/fechar.png) no-repeat; }
 .accordion { float: left; width: 1000px; }
 .accordion h3 { margin-bottom: 2px; padding: 0 10px; background: url(/static/img/bg-filtros.png); border-radius: 4px; line-height: 40px; }
-.accordion h3 a { display: block; color: #fff; text-shadow: none; text-decoration: none; }
+.accordion h3 a { display: block; float: left; width: 950px; color: #fff; text-shadow: none; text-decoration: none; }
+.accordion h3 div { float: left; width: 20px; height: 20px; margin: 10px 0 10px 10px; }
+.accordion h3 div.exibir { background: url(/static/img/expandir.png) no-repeat; }
+.accordion h3 div.ocultar { background: url(/static/img/recolher.png) no-repeat; }
 .accordion ul { margin: 20px; }
 /*scroll*/
 .popup .scroll-bar { height: 758px; margin: 0 0 0 12px; background: #ccc; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80), 0 0 5px rgba(0, 0, 0, 0.3) inset; }
