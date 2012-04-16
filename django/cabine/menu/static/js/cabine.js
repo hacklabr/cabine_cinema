@@ -44,7 +44,7 @@ $(document).ready(function() {
 	$('.em-breve').click(function() {
 		var id = $(this).attr('id').replace('proximo_', '');
 		$('#remover_'+id).fadeIn();
-		console.log('embreve');
+		//console.log('embreve');
 		return false;
 	});
 	
@@ -55,7 +55,7 @@ $(document).ready(function() {
 			var posicao = $(this).parents('.remover').attr('id').replace('remover_', '');
 			remover_da_fila(posicao);
 		}
-		console.log('remover');
+		//console.log('remover');
 		
 		return false;
 	
