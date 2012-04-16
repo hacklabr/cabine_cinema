@@ -10,11 +10,6 @@ var intervalo_iterator_max = fps * intervalo_start;
 
 $(document).ready(function() {
 	
-	// Tava no HTML da Catia, nao sei o q faz
-	jQuery(function() {
-		jQuery( "#accordion" ).accordion({active: false});
-	});
-	
 	// Simula o fim do filme que está tocando
 	// Funçao só para testes! remover!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	$('#tocando').click(function() {
