@@ -127,7 +127,7 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 #tocando h2, #intervalo h2, .ocupado h2, .vazio h2 { position: absolute; bottom: 0; line-height: 27px; width: 246px; margin-bottom: 0; text-transform: uppercase; }
 /*intervalo*/
 #intervalo { display: none; }
-#contador_pause, #contador_play, #contador_skip { position: absolute; bottom: 47px; display: block; width: 61px; height: 61px; text-indent: -9999px; }
+#contador_pause, #contador_play, #contador_skip { position: absolute; bottom: 33px; display: block; width: 61px; height: 61px; text-indent: -9999px; }
 #contador_pause, #contador_play { left: 69px; }
 #contador_skip { left: 170px; }
 #contador_pause { background: url(/static/img/pause.png) no-repeat; }
@@ -204,3 +204,10 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 /*scroll*/
 .popup .scroll-bar { height: 758px; margin: 0 0 0 12px; background: #ccc; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80), 0 0 5px rgba(0, 0, 0, 0.3) inset; }
 .popup .scroll-handler { height: 100px; }
+
+/* =Contador
+-------------------------------------------------------------- */
+
+#countdown { width: 100px; height: 100px; position: relative; background-color: #ccc; margin: 10px auto; }
+#countdown svg { position: absolute; width: 100px; height: 100px; top: 0; left: 0; z-index: 9;}
+#contador { position: absolute; width: 100px; height: 100px; line-height: 100px; color: white; font-size: 40px; font-weight: bold; z-index: 10; text-align: center; }

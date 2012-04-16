@@ -1,6 +1,12 @@
 var fazendo_contagem_regressiva = false;
 var algo_tocando = false; // variável para testes, será substituído pelo ajax da monitorar_fila()
 var contagem;
+var radius = 50;
+var intervalo_start = 10;
+var fps = 25;
+var intervalo_iterator = 1;
+var speed = 1;
+var intervalo_iterator_max = fps * intervalo_start;
 
 $(document).ready(function() {
 	
@@ -164,21 +170,31 @@ function inicia_contagem_regressiva() {
 	$('#contador_play').hide();
 	
 	//reseta o contador
-	var c = 10;
-	$('#contador').html(c);
-	
+    intervalo_iterator = 0;
+	$('#contador').html(intervalo_start);
+    
+	drawCircle(0);
 	// seta o timeout
-	contagem = setTimeout('contagem_regressiva()', 1000);
+	contagem = setTimeout('contagem_regressiva()', 1000/(fps*speed));
 	
 }
 
 function contagem_regressiva() {
 
-	// subtrai 1
-	var c = parseInt($('#contador').html());
-	c --;
-	//console.log(c);
-	$('#contador').html(c);
+	
+    intervalo_iterator = (intervalo_iterator + 1) % intervalo_iterator_max;
+    
+    drawCircle(intervalo_iterator);
+    
+    var c = parseInt($('#contador').html());
+    
+    if (intervalo_iterator % fps == 0) {
+        
+	    c --;
+        $('#contador').html(c);
+    }
+    
+    
 	
 	// se for zero
 	if (c == 0) {
@@ -186,9 +202,29 @@ function contagem_regressiva() {
 		anda_fila_e_toca_video();
 		clearTimeout(contagem);
 	} else {
-		contagem = setTimeout('contagem_regressiva()', 1000);
+		contagem = setTimeout('contagem_regressiva()', 1000/(speed*fps));
 	}
 
+}
+
+function drawCircle(secs) {
+    var origin = [ radius, radius ]
+    var start = position(-Math.PI/2)
+    var angle = 2 * Math.PI * secs / intervalo_iterator_max - Math.PI/2
+    var end = position(angle)
+
+    origin = origin.join(' ')
+    start = start.join(' ')
+    end = end.join(' ')
+
+    var flag = secs < intervalo_iterator_max/2 ? 0 : 1
+    
+    $('#clock').attr('d', 'M ' + origin + ' L ' + start + ' A ' + origin + ' 0 ' + flag + ' 1 ' + end + ' Z')
+}
+
+function position(angle) {
+    return [ radius + Math.cos(angle) * radius,
+	     radius + Math.sin(angle) * radius ]
 }
 
 // pasando 0 como clip_id vc vai deixar a caixa vazia
