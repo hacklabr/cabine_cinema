@@ -1,0 +1,9 @@
+SETUP da parte django da cabine
+
+Nesse mesmo diretorio que vc esta agora faça:
+
+pip -E env install south django
+cp db-sample/* .
+. env/bin/activate
+
+./manage.py runserver
