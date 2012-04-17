@@ -5,6 +5,7 @@ var radius = 50;
 var intervalo_start = 10;
 var fps = 25;
 var intervalo_iterator = 1;
+var origin = [ 50, 50 ];
 var speed = 1;
 var intervalo_iterator_max = fps * intervalo_start;
 
@@ -213,23 +214,23 @@ function contagem_regressiva() {
 }
 
 function drawCircle(secs) {
-    var origin = [ radius, radius ]
+    
     var start = position(-Math.PI/2)
     var angle = 2 * Math.PI * secs / intervalo_iterator_max - Math.PI/2
     var end = position(angle)
 
-    origin = origin.join(' ')
+    var or = origin.join(' ')
     start = start.join(' ')
     end = end.join(' ')
 
     var flag = secs < intervalo_iterator_max/2 ? 0 : 1
     
-    $('#clock').attr('d', 'M ' + origin + ' L ' + start + ' A ' + origin + ' 0 ' + flag + ' 1 ' + end + ' Z')
+    $('#clock').attr('d', 'M ' + or + ' L ' + start + ' A ' + or + ' 0 ' + flag + ' 1 ' + end + ' Z')
 }
 
 function position(angle) {
-    return [ radius + Math.cos(angle) * radius,
-	     radius + Math.sin(angle) * radius ]
+    return [ origin[0] + Math.cos(angle) * radius,
+	     origin[1] + Math.sin(angle) * radius ]
 }
 
 // pasando 0 como clip_id vc vai deixar a caixa vazia
