@@ -217,4 +217,4 @@ div.accordion > div { display:none; }
 
 #countdown { width: 100px; height: 100px; position: relative; background-color: #ccc; margin: 10px auto; }
 #countdown svg { position: absolute; width: 100px; height: 100px; top: 0; left: 0; z-index: 9;}
-#contador { position: absolute; width: 100px; height: 100px; line-height: 100px; color: white; font-size: 40px; font-weight: bold; z-index: 10; text-align: center; }
+#contador { position: absolute; width: 99px; height: 99px; line-height: 100px; color: white; font-size: 40px; font-weight: bold; z-index: 10; text-align: center; border: 1px solid white}

@@ -1,7 +1,7 @@
 var fazendo_contagem_regressiva = false;
 var algo_tocando = false; // variável para testes, será substituído pelo ajax da monitorar_fila()
 var contagem;
-var radius = 50;
+var radius = 40;
 var intervalo_start = 10;
 var fps = 25;
 var intervalo_iterator = 1;
@@ -219,18 +219,20 @@ function drawCircle(secs) {
     var angle = 2 * Math.PI * secs / intervalo_iterator_max - Math.PI/2
     var end = position(angle)
 
-    var or = origin.join(' ')
+    var orig = origin.join(' ')
+    var rad = radius + ' ' + radius
     start = start.join(' ')
     end = end.join(' ')
 
     var flag = secs < intervalo_iterator_max/2 ? 0 : 1
-    
-    $('#clock').attr('d', 'M ' + or + ' L ' + start + ' A ' + or + ' 0 ' + flag + ' 1 ' + end + ' Z')
+
+    $('#clock').attr('d', 'M ' + orig + ' L ' + start + ' A ' + rad + ' 0 ' + flag + ' 1 ' + end + ' Z')
 }
 
 function position(angle) {
     return [ origin[0] + Math.cos(angle) * radius,
-	     origin[1] + Math.sin(angle) * radius ]
+	     origin[1] + Math.sin(angle) * radius
+	   ]
 }
 
 // pasando 0 como clip_id vc vai deixar a caixa vazia
