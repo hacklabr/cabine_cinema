@@ -6,13 +6,21 @@ import json
 
 def index(request):
     clips = Clip.objects.all()
-    clips_all = clips
-    clips_year = clips.order_by('year')
-    clips_director = clips.order_by('director')
-    clips_genre = clips.order_by('genre')
+    director_d = movieHash(Director)
+    genre_d = movieHash(Genre)
+    country_d = movieHash(Country)
+    star_d = movieHash(Star)
     
     return render_to_response('index.html', locals())
 
+def movieHash(classe):
+    hash = {}
+    for item in clean_object(classe.objects.all()):
+        hash[item["name"]] = clean_object(classe.objects.get(id=item["id"]).clip_set.all())
+        
+    return hash
+
+# TODO: remover
 def enqueue(request, clip_id):
     clip = Clip.objects.get(id=clip_id)
     #fd = open("/tmp/list.pls","w")
@@ -29,19 +37,26 @@ def clean_object(object_list):
             
     return data
     
-
+# TODO: remover
 def genre(request, genre_id=None):
     
-    if genre_id:
-        try:
-            objs = clean_object(Genre.objects.get(id=genre_id).clip_set.all())
-        except:
-            return HttpResponse("")
-    else:
-        objs = clean_object(Genre.objects.all())
-        
-    return HttpResponse(json.dumps(objs))
+#    if genre_id:
+#        try:
+#            objs = clean_object(Genre.objects.get(id=genre_id).clip_set.all())
+#        except:
+#            return HttpResponse("")
+#    else:
+#        objs = clean_object(Genre.objects.all())
 
+    genre_d = {}
+    for genre in clean_object(Genre.objects.all()):
+        #import pdb;pdb.set_trace()
+        genre_d[genre["name"]] = clean_object(Genre.objects.get(id=genre["id"]).clip_set.all())
+             
+    return HttpResponse(json.dumps(genre_d))
+
+
+# TODO: remover
 def year(request, year_id=None):
     
     if year_id:
@@ -53,7 +68,7 @@ def year(request, year_id=None):
         objs = clean_object(Year.objects.all())
         
     return HttpResponse(json.dumps(objs))
-
+# TODO: remover
 def director(request, director_id=None):
     
     if director_id:
@@ -65,7 +80,7 @@ def director(request, director_id=None):
         objs = clean_object(Director.objects.all())
         
     return HttpResponse(json.dumps(objs))
-
+# TODO: remover
 def star(request, star_id=None):
     
     if star_id:
@@ -77,7 +92,7 @@ def star(request, star_id=None):
         objs = clean_object(Star.objects.all())
         
     return HttpResponse(json.dumps(objs))
-
+# TODO: remover
 def clips(request, order=None):
     
     clips = []

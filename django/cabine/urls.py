@@ -5,7 +5,7 @@ MEDIA_ROOT = settings.MEDIA_ROOT
 
 admin.autodiscover()
 
-
+# TODO: remover urls obsoletas
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'menu.views.index', name='index'),

@@ -16,26 +16,15 @@
 			
 			<div class="popup" id="popup-filmes">
 				<div class="wrap">
-					<div class="fechar"></div>
-					<div class="accordion">
-						<h3 class="clearfix"><a href="#">First header</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-							</ul>
-						</div>
-						 <!--.lista-de-titulos-->
-						<h3 class="clearfix"><a href="#">Second header</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-							</ul>
-						</div>
-						<!--.lista-de-titulos-->
+					
+					<div>
+						<ul>
+						{% for clip in clips%}
+								<li>{{clip}}</li>
+						{% endfor %}
+						</ul>
+					</div>
+						 
 					</div>
 					<!-- .accordion -->
 					<div class="scroll-bar">
@@ -45,31 +34,24 @@
 					<!-- .scroll-bar -->
 				</div>
 				<!-- .wrap -->
-			</div>
+		
 			<!-- .popup -->
 			
 			<div class="popup" id="popup-diretores">
 				<div class="wrap">
 					<div class="fechar"></div>
 					<div class="accordion">
-						<h3 class="clearfix"><a href="#">First header</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-							</ul>
-						</div>
-						 <!--.lista-de-titulos-->
-						<h3 class="clearfix"><a href="#">Second header</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-							</ul>
-						</div>
+						{% for director, movies in director_d.items %}
 						<!--.lista-de-titulos-->
+						<h3 class="clearfix"><a href="#">{{director}}</a><div class="exibir"></div></h3>
+						<div>
+							<ul>
+							{% for movie in movies %}
+								<li>{{movie.name}}</li>
+							{% endfor %}
+							</ul>
+						</div>
+						{% endfor %}
 					</div>
 					<!-- .accordion -->
 					<div class="scroll-bar">
@@ -86,24 +68,17 @@
 				<div class="wrap">
 					<div class="fechar"></div>
 					<div class="accordion">
-						<h3 class="clearfix"><a href="#">First header</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-							</ul>
-						</div>
-						 <!--.lista-de-titulos-->
-						<h3 class="clearfix"><a href="#">Second header</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-							</ul>
-						</div>
+						{% for star, movies in star_d.items %}
 						<!--.lista-de-titulos-->
+						<h3 class="clearfix"><a href="#">{{star}}</a><div class="exibir"></div></h3>
+						<div>
+							<ul>
+								{% for movie in movies %}
+									<li>{{movie.name}}</li>
+								{% endfor %}
+							</ul>
+						</div>
+						{% endfor %}
 					</div>
 					<!-- .accordion -->
 					<div class="scroll-bar">
@@ -120,24 +95,17 @@
 				<div class="wrap">
 					<div class="fechar"></div>
 					<div class="accordion">
-						<h3 class="clearfix"><a href="#">First header</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-							</ul>
-						</div>
-						 <!--.lista-de-titulos-->
-						<h3 class="clearfix"><a href="#">Second header</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-							</ul>
-						</div>
+						{% for country, movies in country_d.items %}
 						<!--.lista-de-titulos-->
+						<h3 class="clearfix"><a href="#">{{country}}</a><div class="exibir"></div></h3>
+						<div>
+							<ul>
+							{% for movie in movies %}
+								<li>{{movie.name}}</li>
+							{% endfor%}
+							</ul>
+						</div>
+						{% endfor %}
 					</div>
 					<!-- .accordion -->
 					<div class="scroll-bar">
@@ -154,24 +122,17 @@
 				<div class="wrap">
 					<div class="fechar"></div>
 					<div class="accordion">
-						<h3 class="clearfix"><a href="#">First header</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-							</ul>
-						</div>
-						 <!--.lista-de-titulos-->
-						<h3 class="clearfix"><a href="#">Second header</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-								<li>Nome do Filme</li>
-							</ul>
-						</div>
+					{% for genre, movies in genre_d.items %}
 						<!--.lista-de-titulos-->
+						<h3 class="clearfix"><a href="#">{{genre}}</a><div class="exibir"></div></h3>
+						<div>
+							<ul>
+								{% for movie in movies %}
+								<li>{{movie.name}}</li>
+								{% endfor %}
+							</ul>
+						</div>
+					{% endfor %}
 					</div>
 					<!-- .accordion -->
 					<div class="scroll-bar">

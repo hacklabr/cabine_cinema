@@ -12,36 +12,42 @@ class Command(NoArgsCommand):
     
     def handle_noargs(self, **options):
         data = self.datadict()
-        for i in data:
-            iid=str(i)
+        for index in data:
+            iid=str(index)
             clip = data[iid]
+            print "++ %s ++" % iid
             c = Clip(id=iid, name=clip["name"], orig_name=clip["orig_name"], sinopse=clip["sinopse"], classificacao=clip["classificacao"])
             c.save()
-
+        
             for j in clip["director"].split(','):
                 dire = j.strip()
                 dire = self.query(Director, dire)
                 c.director.add(dire)
+                print "d\r"
 
             for j in clip["country"].split(','):
-                dire = j.strip()
-                dire = self.query(Country, dire)
-                c.country = dire
+                country = j.strip()
+                country = self.query(Country, country)
+                c.country = country
+                print "c\r"
 
             for j in clip["year"].split(','):
-                dire = j.strip()
-                dire = self.query(Year, dire)
-                c.year = dire
+                year = j.strip()
+                year = self.query(Year, year)
+                c.year = year
+                print "y\r"
 
             for j in clip["genre"].split(','):
-                dire = j.strip()
-                dire = self.query(Genre, dire)
-                c.genre.add(dire)
+                genre = j.strip()
+                genre = self.query(Genre, genre)
+                c.genre.add(genre)
+                print "g\r"
 
             for j in clip["star"].split(','):
-                dire = j.strip()
-                dire = self.query(Star, dire)
-                c.star.add(dire)
+                star = j.strip()
+                star = self.query(Star, star)
+                c.star.add(star)
+                print "s\r"
 
             c.save()
 
@@ -49,9 +55,9 @@ class Command(NoArgsCommand):
         try:
             return Obj.objects.get(name=nome)
         except:
-            o = Obj(name=nome)
-            o.save()
-            return o
+            obj = Obj(name=nome)
+            obj.save()
+            return obj
 
     def datadict(self):
         data = open("../../doc/lista filmes cabine.csv","r").read().split("\n")
