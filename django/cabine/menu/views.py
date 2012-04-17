@@ -1,15 +1,19 @@
+import os
+import json
+import operator
+
 from menu.models import *
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-import os
-import json
+
 
 def index(request):
     clips = Clip.objects.all()
-    director_d = movieHash(Director)
-    genre_d = movieHash(Genre)
-    country_d = movieHash(Country)
-    star_d = movieHash(Star)
+    director_d = sortHash(movieHash(Director))
+    genre_d = sortHash(movieHash(Genre))
+    #import pdb;pdb.set_trace()
+    country_d = sortHash(movieHash(Country))
+    star_d = sortHash(movieHash(Star))
     
     return render_to_response('index.html', locals())
 
@@ -19,6 +23,11 @@ def movieHash(classe):
         hash[item["name"]] = clean_object(classe.objects.get(id=item["id"]).clip_set.all())
         
     return hash
+
+def sortHash(hash):    
+    lista = sorted(hash.iteritems(), key=operator.itemgetter(1))
+    lista.sort()
+    return lista
 
 # TODO: remover
 def enqueue(request, clip_id):
@@ -34,7 +43,6 @@ def clean_object(object_list):
         temp = obj.__dict__
         temp.pop('_state')      
         data.append(temp)
-            
     return data
     
 # TODO: remover
@@ -92,7 +100,7 @@ def star(request, star_id=None):
         objs = clean_object(Star.objects.all())
         
     return HttpResponse(json.dumps(objs))
-# TODO: remover
+
 def clips(request, order=None):
     
     clips = []
