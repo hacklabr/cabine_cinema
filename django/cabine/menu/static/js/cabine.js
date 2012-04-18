@@ -222,31 +222,51 @@ $(document).ready(function() {
 function monitorar_fila() {
 	//console.log('monitorando');
 	// faz um ajax e checa um arquivo de texto pra saber se tem algo tocando
-	var playing = algo_tocando;
-	//console.log(playing);
-	// se não tem nada tocando
-	if (!playing && !fazendo_contagem_regressiva) {
-	
-		// se tiver algo na fila
-		if ( $('#proximo_1').data('clip') != 0) {
-		
-			// carrega contagem regressiva
-			$('#tocando').hide();
-			$('#intervalo').show();
-			
-			
-			// inicializa contagem regressiva
-			inicia_contagem_regressiva();
-			
-			
-		} else {
-		// se não tiver nada na fila
-			//console.log('nada na fila');
-			// carrega interface vazia
-			carrega_caixas_vazias();
-		}
-	}
-	
+
+    //var playing = algo_tocando;
+
+
+    $.ajax({
+        type: 'GET',
+        url: '/status/',
+        success: function(data){
+            playing_status = data;
+            if (playing_status == "idle"){
+                playing = false;
+            }else{
+                playing = true;
+            }
+
+
+            console.log(playing,fazendo_contagem_regressiva );
+            // se não tem nada tocando
+            if (!playing && !fazendo_contagem_regressiva) {
+
+                // se tiver algo na fila
+                if ( $('#proximo_1').data('clip') != 0) {
+
+                    // carrega contagem regressiva
+                    $('#tocando').hide();
+                    $('#intervalo').show();
+
+
+                    // inicializa contagem regressiva
+                    inicia_contagem_regressiva();
+
+
+                } else {
+                    // se não tiver nada na fila
+                    //console.log('nada na fila');
+                    // carrega interface vazia
+                    carrega_caixas_vazias();
+                }
+            }
+
+
+        },
+    });
+
+
 }
 
 function carrega_caixas_vazias() {
@@ -272,6 +292,11 @@ function anda_fila_e_toca_video() {
 		
 		// dá o play no ajax
 		algo_tocando = true;
+
+        $.ajax({
+            type: 'GET',
+            url: '/enqueue/'+$("#tocando").data('clip'),
+        });
 		// Não esquecer de no ajax fazer a contagem dos plays! 
 		// Temos que fazer uma tabela de log com hora e play de todos os videos
 		
@@ -406,4 +431,4 @@ function remover_da_fila(posicao) {
 }
 
 
-window.setInterval('monitorar_fila()', 1000);
+window.setInterval('monitorar_fila()', 500);

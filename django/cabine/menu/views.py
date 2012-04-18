@@ -29,13 +29,22 @@ def sortHash(hash):
     lista.sort()
     return lista
 
-# TODO: remover
 def enqueue(request, clip_id):
     clip = Clip.objects.get(id=clip_id)
     #fd = open("/tmp/list.pls","w")
     #fd.write(clip.file_path)
-    os.system("ln -sf %s /tmp/video" % clip.file_path)
-    return HttpResponse(clip.file_path)
+    os.system("echo 'loadfile %s' > /tmp/fifo" % clip.file_path)
+
+    return HttpResponse(True)
+
+def status(request):
+    os.system("echo 'get_file_name' > /tmp/fifo")
+    log_line = open("/tmp/mplayer.log","r").read().split('\n')[-2]
+    if "ANS_FILENAME=" in log_line:
+        return HttpResponse("playing %s " % log_line.split("=")[1])
+    else:
+        return HttpResponse("idle")
+
 
 def clean_object(object_list):
     data = []
