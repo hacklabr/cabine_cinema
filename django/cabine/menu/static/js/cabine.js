@@ -1,10 +1,11 @@
 var fazendo_contagem_regressiva = false;
 var algo_tocando = false; // variável para testes, será substituído pelo ajax da monitorar_fila()
 var contagem;
-var radius = 50;
+var radius = 40;
 var intervalo_start = 10;
 var fps = 25;
 var intervalo_iterator = 1;
+var origin = [ 50, 50 ];
 var speed = 1;
 var intervalo_iterator_max = fps * intervalo_start;
 
@@ -95,6 +96,125 @@ $(document).ready(function() {
 	});
 	
 	
+	/** scroll **/
+	
+	$('#cenas').mousedown(function(){
+		$('#selecao').hide();
+	}).mouseup(function(){
+		$('#selecao').fadeIn('fast');
+	}).mouseleave(function(){
+		$('#selecao').fadeIn('fast');
+	});
+	
+	var fichas_interval;
+	var cenas_interval;
+	var timeout_delay = 10;
+	
+	var $sbar = $('#scroll-handler');
+	var sbar = $sbar.parent().height() - $sbar.height();
+	
+	$(document.body).disableSelection();
+	
+	$('#cenas-content').data('selected-clip',0);
+	
+	$('#cenas-content img').click(function(){
+		var h = 168;
+		var i = $(this).data('clipid')-1;
+		var top = (-i*h);
+		
+		clearInterval(fichas_interval);
+		$('#cenas-content').stop().animate({top: top},'slow');
+		$('#cenas-content').data('selected-clip',i);
+	});
+	
+	$("#fichas").jScroll({
+		hScroll: false,
+		vScrollbar: false,
+		useTransform: false,
+		
+		onScrollStart: function(){
+			clearInterval(fichas_interval);
+			clearInterval(cenas_interval);
+			
+			var height = $('#fichas-content').outerHeight() - $('#fichas').height();
+			var _height = $('#cenas-content').outerHeight() - $('#cenas').height();
+			
+			fichas_interval = setInterval(function(){
+				var scroll = parseInt(document.getElementById('fichas-content').style.top);
+				var p = scroll/height;
+				var t = _height*p
+				
+				$sbar.css('top',-sbar*p);
+				document.getElementById('cenas-content').style.top = t+'px';
+			}, timeout_delay);
+		},
+		onScrollEnd: function(){
+			var h = 620;
+			var scroll = parseInt($('#fichas-content').css('top'));
+			var i = Math.round(scroll/h);
+			var snap = i*h;
+			$('#cenas-content').data('selected-clip',-i);
+			if(snap != scroll){
+				$('#fichas-content').animate({top:snap},'slow',function(){
+					clearInterval(fichas_interval);
+				});
+			}else{
+				clearInterval(fichas_interval);
+			}
+		}
+	});
+	
+	
+	$("#cenas").jScroll({
+		hScroll: false,
+		vScrollbar: false,
+		useTransform: false,
+
+		onScrollStart: function(){
+			clearInterval(cenas_interval);
+			clearInterval(fichas_interval);
+			var height = $('#cenas-content').outerHeight() - $('#cenas').height();
+			var _height = $('#fichas-content').outerHeight() - $('#fichas').height();
+			
+			cenas_interval = setInterval(function(){
+				var scroll = parseInt(document.getElementById('cenas-content').style.top);
+				var p = scroll/height;
+				var t = _height*p
+				$sbar.css('top',-sbar*p);
+				document.getElementById('fichas-content').style.top = t+'px';
+			}, timeout_delay);
+		},
+		onScrollEnd: function(){
+			var h = 168;
+			var scroll = parseInt($('#cenas-content').css('top'));
+			var i = Math.round(scroll/h);
+			$('#cenas-content').data('selected-clip',-i);
+			$('#cenas-content').animate({top:(i*h)},'slow',function(){
+				clearInterval(cenas_interval);
+				
+			});
+		}
+	});
+	
+	$('#scroll-up').click(function(){
+		var i = $('#cenas-content').data('selected-clip') -1;
+		i = i >= 0 ? i : 0;
+		var h = 168;
+		clearInterval(fichas_interval);
+		$('#cenas-content').stop().animate({top:(-i*h)},'slow');
+		$('#cenas-content').data('selected-clip',i);
+	});
+	
+	$('#scroll-down').click(function(){
+		var i = $('#cenas-content').data('selected-clip') +1;
+		console.log(i);
+		i = i >= 0 ? i : 0;
+		var h = 168;
+		clearInterval(fichas_interval);
+		clearInterval(fichas_interval);
+		$('#cenas-content').stop().animate({top:(-i*h)},'slow');
+		$('#cenas-content').data('selected-clip',i);
+	});
 });
 	
 
@@ -213,23 +333,25 @@ function contagem_regressiva() {
 }
 
 function drawCircle(secs) {
-    var origin = [ radius, radius ]
+    
     var start = position(-Math.PI/2)
     var angle = 2 * Math.PI * secs / intervalo_iterator_max - Math.PI/2
     var end = position(angle)
 
-    origin = origin.join(' ')
+    var orig = origin.join(' ')
+    var rad = radius + ' ' + radius
     start = start.join(' ')
     end = end.join(' ')
 
     var flag = secs < intervalo_iterator_max/2 ? 0 : 1
-    
-    $('#clock').attr('d', 'M ' + origin + ' L ' + start + ' A ' + origin + ' 0 ' + flag + ' 1 ' + end + ' Z')
+
+    $('#clock').attr('d', 'M ' + orig + ' L ' + start + ' A ' + rad + ' 0 ' + flag + ' 1 ' + end + ' Z')
 }
 
 function position(angle) {
-    return [ radius + Math.cos(angle) * radius,
-	     radius + Math.sin(angle) * radius ]
+    return [ origin[0] + Math.cos(angle) * radius,
+	     origin[1] + Math.sin(angle) * radius
+	   ]
 }
 
 // pasando 0 como clip_id vc vai deixar a caixa vazia
