@@ -214,20 +214,23 @@
 				<!-- .em-cartaz -->
 				
 				<div id="intervalo">
-					<h2>Intervalo</h2>
-                    <div id="countdown">
-                        <div id="contador">30</div>
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" >
-                            <path id="clock" d="M 50 50 L 40 0 A 40 40 0 0 1 40 40 Z" fill="#999999"/>
-                            <circle id="border1" cx="50" cy="50" r="40" stroke="black" stroke-width="2" fill-opacity="0" />
-                            <circle id="border2" cx="50" cy="50" r="35" stroke="black" stroke-width="2" fill-opacity="0" />
-                            <line id="line1" x1="0" y1="50" x2="100" y2="50" style="stroke:rgb(255,255,255);stroke-width;1" />
-                            <line id="line2" x1="50" y1="0" x2="50" y2="100" style="stroke:rgb(255,255,255);stroke-width;1" />
-                        </svg>
+                    <h2>Intervalo</h2>
+                    <div id="intervalo-content">
+                        <div id="countdown">
+                            <div id="contador">30</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" >
+                                <path id="clock" d="M 50 50 L 40 0 A 40 40 0 0 1 40 40 Z" fill="#999999"/>
+                                <circle id="border1" cx="50" cy="50" r="40" stroke="black" stroke-width="2" fill-opacity="0" />
+                                <circle id="border2" cx="50" cy="50" r="35" stroke="black" stroke-width="2" fill-opacity="0" />
+                                <line id="line1" x1="0" y1="50" x2="100" y2="50" style="stroke:rgb(255,255,255);stroke-width;1" />
+                                <line id="line2" x1="50" y1="0" x2="50" y2="100" style="stroke:rgb(255,255,255);stroke-width;1" />
+                            </svg>
+                        </div>
+                        <a id="contador_pause">pause</a>
+                        <a id="contador_play">play</a>
+                        <a id="contador_skip">skip</a>
                     </div>
-					<a id="contador_pause">pause</a>
-					<a id="contador_play">play</a>
-					<a id="contador_skip">skip</a>
+                    <!-- #intervalo-content -->				
 				</div>
 				<!-- .intervalo -->				
                 <div id="proximo_1" class="em-breve" data-clip="0">
