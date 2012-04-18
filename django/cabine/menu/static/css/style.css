@@ -162,8 +162,8 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 /*fichas*/
 #fichas { position: relative; height: 778px; overflow: hidden; border-top: 1px solid #fff; border-bottom: 1px solid #b4b4b4; }
 #janela-top, #janela-bottom  { position: absolute; left: 420px; z-index: 10; height: 100px; width: 1080px; }
-#janela-top { top: 240px; background: url(/static/img/janela-top.png) no-repeat top; }
-#janela-bottom { bottom: 59px; background: url(/static/img/janela-bottom.png) no-repeat bottom; }
+#janela-top { top: 240px; background: url(/static/img/janela-top.png) no-repeat top; border-top: 1px solid #fff;}
+#janela-bottom { bottom: 59px; background: url(/static/img/janela-bottom.png) no-repeat bottom; border-bottom: 1px solid #b4b4b4; }
 #fichas-content { position: absolute; z-index: 5; top: -541px; padding:77px 0; }
 .ficha { width: 1080px; height: 580px; padding: 20px 0; overflow: hidden; color: #333; }
 .ficha p { margin-bottom: 10px; }
@@ -214,7 +214,6 @@ div.accordion > div { display:none; }
 
 /* =Contador
 -------------------------------------------------------------- */
-
 #countdown { width: 100px; height: 100px; position: relative; background-color: #ccc; margin: 10px auto; }
 #countdown svg { position: absolute; width: 100px; height: 100px; top: 0; left: 0; z-index: 9;}
 #contador { position: absolute; width: 99px; height: 99px; line-height: 100px; color: white; font-size: 40px; font-weight: bold; z-index: 10; text-align: center; border: 1px solid white}
