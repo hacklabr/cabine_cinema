@@ -308,31 +308,36 @@
 									<h2>{{clip.name}}</h2>
 									<p>
 										<span class="label">Título Original</span><br />
-										La dolce vita
+										{{clip.orig_name}}
 									</p>
 									<p>
 										<span class="label">Diretor</span><br />
-										Federico Fellini
+										{{clip.director.all|join:', '}}
+									</p>
+									<p>
 									</p>
 									<p>
 										<span class="label">País</span><br />
-										Itália
+										{{clip.country}}
+									</p>
+									<p>
 									</p>
 									<p>
 										<span class="label">Ano</span><br />
-										1960
+										{{clip.year}}
 									</p>
 									<p>
 										<span class="label">Gênero</span><br />
-										Drama
+										{{clip.genre.all|join:', '}}
 									</p>
 									<p>
 										<span class="label">Atores</span><br />
-										Anita Ekberg e Marcello Mastroianni
+										{{clip.star.all|join:', '}}
+						
 									</p>
 									<p>
 										<span class="label">Classificação Indicativa</span><br />
-										14 anos
+										{{clip.classificacao}}
 									</p>
 									<a id='adicionar-clip-{{clip.id}}' class="adicionar" data-clipid="{{clip.id}}">Colocar na Fila</a>
 								</div>
