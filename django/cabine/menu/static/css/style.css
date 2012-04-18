@@ -167,10 +167,10 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 #main-section header p { margin-bottom: 0; line-height: 39px; }
 /*fichas*/
 #fichas { position: relative; height: 778px; overflow: hidden; border-top: 1px solid #fff; border-bottom: 1px solid #b4b4b4; }
-#janela-top, #janela-bottom  { position: absolute; left: 0; z-index: 10; height: 100px; width: 1080px; }
-#janela-top { top: 0; background: url(/static/img/janela-top.png) no-repeat top; }
-#janela-bottom { bottom: 0; background: url(/static/img/janela-bottom.png) no-repeat bottom; }
-#fichas-content { position: absolute; z-index: 5; top: -541px; }
+#janela-top, #janela-bottom  { position: absolute; left: 420px; z-index: 10; height: 100px; width: 1080px; }
+#janela-top { top: 240px; background: url(/static/img/janela-top.png) no-repeat top; }
+#janela-bottom { bottom: 59px; background: url(/static/img/janela-bottom.png) no-repeat bottom; }
+#fichas-content { position: absolute; z-index: 5; top: -541px; padding:77px 0; }
 .ficha { width: 1080px; height: 580px; padding: 20px 0; overflow: hidden; color: #333; }
 .ficha p { margin-bottom: 10px; }
 .ficha img, .ficha .info { float: left; }
@@ -190,8 +190,8 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 /* =Menu de cenas
 -------------------------------------------------------------- */
 #menu-de-cenas { position: relative; text-align: center; }
-#cenas { position: relative; width: 300px; height: 1080px; overflow: hidden; margin-right: 20px; float: left; }
-#cenas-content { position: absolute; z-index: 5; top: 0; width: 300px; padding: 12px 0; background: url(/static/img/pelicula.png) repeat-y; }
+#cenas { width: 300px; height: 1080px; overflow: hidden; margin-right: 20px; float: left; }
+#cenas-content {  z-index: 5; top: 0; margin-left:20px; padding-top:517px; padding-bottom:395px; width: 300px;  background: url(/static/img/pelicula.png) repeat-y; }
 #cenas-content img { display: block; margin: 0 auto 12px; }
 /*scroll*/
 #menu-de-cenas .scroll-bar { height: 1062px; margin: 8px 3px; background: #333; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80), 0 0 5px rgba(0, 0, 0, 0.7) inset; }
@@ -199,7 +199,7 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 .scroll-up, .scroll-down { position: absolute; z-index: 10; left: 66px; display: block; height: 34px; width: 208px; margin: auto; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80) inset, 1px 1px 0 rgba(0, 0, 0, 0.4); text-indent: -9999px; }
 .scroll-up { top: 0px; background: #f7931e url(/static/img/up.png) no-repeat center; border-radius: 4px 4px 0 0; }
 .scroll-down { bottom: 0px; background: #f7931e url(/static/img/down.png) no-repeat center; border-radius: 0 0 4px 4px; }
-#selecao { z-index: 10; position: absolute; top: 511px; left: 26px; width: 234px; height: 167px; background: url(/static/img/seletor.png) no-repeat; }
+#selecao { z-index: 10; position: absolute; top: 511px; left: 46px; width: 234px; height: 167px; background: url(/static/img/seletor.png) no-repeat; }
 
 /* =Popup
 -------------------------------------------------------------- */
