@@ -1,5 +1,4 @@
 var fazendo_contagem_regressiva = false;
-var algo_tocando = false; // variável para testes, será substituído pelo ajax da monitorar_fila()
 var contagem;
 var radius = 40;
 var intervalo_start = 10;
@@ -10,13 +9,7 @@ var speed = 1;
 var intervalo_iterator_max = fps * intervalo_start;
 
 $(document).ready(function() {
-	
-	// Simula o fim do filme que está tocando
-	// Funçao só para testes! remover!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	$('#tocando').click(function() {
-		algo_tocando = false;
-	});
-	
+
 	$('.accordion > h3').click(function() {
         var button = $(this).find('div');
         if (button.hasClass('ocultar')) {
@@ -223,9 +216,6 @@ function monitorar_fila() {
 	//console.log('monitorando');
 	// faz um ajax e checa um arquivo de texto pra saber se tem algo tocando
 
-    //var playing = algo_tocando;
-
-
     $.ajax({
         type: 'GET',
         url: '/status/',
@@ -291,7 +281,6 @@ function anda_fila_e_toca_video() {
 		coloca_filme_na_caixa('#proximo_2', 0);
 		
 		// dá o play no ajax
-		algo_tocando = true;
 
         $.ajax({
             type: 'GET',
@@ -431,4 +420,4 @@ function remover_da_fila(posicao) {
 }
 
 
-window.setInterval('monitorar_fila()', 500);
+window.setInterval('monitorar_fila()', 1000);
