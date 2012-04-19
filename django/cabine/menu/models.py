@@ -16,6 +16,7 @@ class Clip(models.Model):
     star = models.ManyToManyField('Star', null=True, blank=True, verbose_name='Estrelas')
     cover = models.FileField(upload_to='cover')
     count = models.IntegerField(max_length=100000, verbose_name="Total de reproduções")
+
     def __unicode__(self):
         return self.name
     

@@ -1,7 +1,7 @@
 var fazendo_contagem_regressiva = false;
 var contagem;
 var radius = 40;
-var intervalo_start = 10;
+var intervalo_start = 3;
 var fps = 25;
 var intervalo_iterator = 1;
 var origin = [ 50, 50 ];

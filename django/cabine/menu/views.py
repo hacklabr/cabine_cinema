@@ -6,6 +6,7 @@ from menu.models import *
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 
+FIFO = "/tmp/fifo"
 
 def index(request):
     clips = Clip.objects.all()
@@ -34,17 +35,33 @@ def enqueue(request, clip_id):
     clip.save()
     entry = Log(clip=clip,date=datetime.now())
     entry.save()
-    os.system("echo 'loadfile %s' > /tmp/fifo" % clip.file_path)
-
+    os.system("echo 'loadfile %s' > %s" % (clip.file_path, FIFO))
+    os.system("touch /tmp/waiting")
+    
     return HttpResponse(True)
 
 def status(request):
-    os.system("echo 'get_file_name' > /tmp/fifo")
+    if os.path.exists(FIFO) and os.path.isfile(FIFO):
+        os.unlink(FIFO)
+        os.mkfifo(FIFO)
+    
+    if not os.path.exists(FIFO):
+        os.mkfifo(FIFO)
+
+    os.system("echo 'get_file_name' > %s" % FIFO)
     log_line = open("/tmp/mplayer.log","r").read().split('\n')[-2]
+
     if "ANS_FILENAME=" in log_line:
+        if os.path.exists("/tmp/waiting"):
+            os.unlink("/tmp/waiting")
+
         return HttpResponse("playing %s " % log_line.split("=")[1])
     else:
-        return HttpResponse("idle")
+        if os.path.exists("/tmp/waiting"):
+            return HttpResponse("waiting")
+        else:
+            return HttpResponse("idle")
+
 
 
 def clean_object(object_list):
