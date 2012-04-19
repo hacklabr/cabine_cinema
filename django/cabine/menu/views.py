@@ -1,7 +1,7 @@
 import os
 import json
 import operator
-
+from datetime import datetime
 from menu.models import *
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
@@ -11,7 +11,6 @@ def index(request):
     clips = Clip.objects.all()
     director_d = sortHash(movieHash(Director))
     genre_d = sortHash(movieHash(Genre))
-    #import pdb;pdb.set_trace()
     country_d = sortHash(movieHash(Country))
     star_d = sortHash(movieHash(Star))
     
@@ -31,8 +30,10 @@ def sortHash(hash):
 
 def enqueue(request, clip_id):
     clip = Clip.objects.get(id=clip_id)
-    #fd = open("/tmp/list.pls","w")
-    #fd.write(clip.file_path)
+    clip.count += 1
+    clip.save()
+    entry = Log(clip=clip,date=datetime.now())
+    entry.save()
     os.system("echo 'loadfile %s' > /tmp/fifo" % clip.file_path)
 
     return HttpResponse(True)
