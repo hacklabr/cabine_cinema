@@ -384,7 +384,7 @@ function coloca_filme_na_caixa(caixa, clip_id) {
 	
 	if (clip_id > 0) {
 	
-		var imgsrc = '/static/thumbs/'+clip_id+'-medio.jpg';
+		var imgsrc = '/static/thumbs/'+clip_id+'-media.jpg';
 		
 		// se nao existir imagem, cria
 		if ( $(caixa + ' > img').length == 0)
