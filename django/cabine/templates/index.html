@@ -314,8 +314,11 @@
 						{% for clip in clips %}
 						
 							<div class="ficha clearfix"  data-clipid="{{clip.id}}">
-								<img src="/static/thumbs/{{clip.id}}.jpg" alt="{{clip.name}}" />
-								<!--<img src="/static/thumbs/3.jpg" alt="{{clip.name}}" />-->
+								{% if clip.cover %}
+									<img src="/static/thumbs/{{clip.id}}.jpg" alt="{{clip.name}}" />
+								{% else %}
+									<img src="/static/thumbs/3.jpg" alt="{{clip.name}}" />
+								{% endif %}
 								<div class="info">
 									<h2>{{clip.name}}</h2>
 									<p>
@@ -377,8 +380,11 @@
 					<div id="cenas-content">
 						
 						{% for clip in clips %}
-							<img id="img-{{clip.id}}" src="/static/thumbs/{{clip.id}}-pequeno.jpg" alt=""  data-clipid="{{clip.id}}"/>
-                            <!-- <img id="img-{{clip.id}}" src="/static/thumbs/3-pequeno.jpg" alt="" data-clipid="{{clip.id}}"/> -->
+							{% if clip.cover %}
+								<img id="img-{{clip.id}}" src="/static/thumbs/{{clip.id}}-pequena.jpg" alt=""  data-clipid="{{clip.id}}"/>
+							{% else %}
+					                        <img id="img-{{clip.id}}" src="/static/thumbs/3-pequena.jpg" alt="" data-clipid="{{clip.id}}"/>
+							{% endif %}
 						{% endfor %}
 					</div>
 					<!-- #cenas-content -->					

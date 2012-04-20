@@ -1,4 +1,6 @@
 # _*_ coding: UTF-8 _*_
+import os
+import settings
 from django.db import models
 from django.forms import ModelForm
 
@@ -14,8 +16,17 @@ class Clip(models.Model):
     country = models.ForeignKey('Country', null=True, blank=True, verbose_name='País')
     year = models.ForeignKey('Year',null=True, blank=True, verbose_name='Ano de lançamento')
     star = models.ManyToManyField('Star', null=True, blank=True, verbose_name='Estrelas')
-    cover = models.FileField(upload_to='cover')
+    cover = models.BooleanField(verbose_name="Tem capa em arquivo")
     count = models.IntegerField(max_length=100000, verbose_name="Total de reproduções")
+
+    def verifica_capa(self):
+        if os.path.exists("%s/%s/%s.jpg" % ( settings.path,  "/menu/static/thumbs/", self.id)):
+            self.cover = True
+	    self.save()
+	else:
+	    self.cover = False
+	    self.save()  	
+
 
     def __unicode__(self):
         return self.name
