@@ -41,6 +41,9 @@ def enqueue(request, clip_id):
     return HttpResponse(True)
 
 def status(request):
+    
+    return HttpResponse("idle")
+    
     if os.path.exists(FIFO) and os.path.isfile(FIFO):
         os.unlink(FIFO)
         os.mkfifo(FIFO)
