@@ -1,10 +1,18 @@
 import os
 import string
-print os.path.realpath(__file__)
+import socket
 
 path= os.path.realpath(__file__).split('/')
 path.pop()
 path = string.join(path,"/")+"/"
+
+hostname = socket.gethostname()
+
+if hostname == "cabine":
+    PRODUCAO = True
+else:
+    PRODUCAO = False
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
