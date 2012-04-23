@@ -224,6 +224,8 @@ $(document).ready(function() {
 	
 	var num_cenas = $('#cenas-content img').length;
 	
+	var stop = false;
+	
 	$(window).load(function(){
 		fichas_height = $('#fichas-content').outerHeight() - $('#fichas').height();
 		cenas_height = $('#cenas-content').outerHeight() - $('#cenas').height();
@@ -277,9 +279,11 @@ $(document).ready(function() {
 			last_fichas_top = new_fichas_top;
 			last_sbar_top = sbar_top;
 			
-		}else if(scrolling && !mousedown){
+		}else if(scrolling && !mousedown || stop){
+			stop = false;
 			// on stop scrolling event
 			if(!in_animate){
+				
 				var i = Math.round(cenas_top/snap_cena);
 				var current_top = parseInt($('#cenas-content').css('top'));
 				in_animate = true;
@@ -342,6 +346,7 @@ $(document).ready(function() {
 		stop: function(){
 			in_animate = false;
 			mousedown = false;
+			stop = true;
 		}
 	});
 	
