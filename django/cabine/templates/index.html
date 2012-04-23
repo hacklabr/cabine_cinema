@@ -19,16 +19,19 @@
 			<div class="popup" id="popup-filmes">
 				<div class="wrap">					
 					<div class="fechar"></div>
-					<div class="accordion">
-						<ul>
-						{% for clip in clips%}
-								<li>{{clip}}</li>
-						{% endfor %}
-						</ul>
+					<div class="popup-scroll">
+						<div class="accordion">
+							<ul>
+							{% for clip in clips%}
+									<li data-movie-index="{{forloop.counter}}">{{clip}}</li>
+							{% endfor %}
+							</ul>
+						</div>
+						<!-- .accordion -->
 					</div>
-					<!-- .accordion -->						 
+					<!-- .popup-scroll -->
 					<div class="scroll-bar">
-						<div class="scroll-handler">
+						<div class="scroll-handler"><div></div>
 						</div>
 					</div>
 					<!-- .scroll-bar -->
@@ -40,23 +43,26 @@
 			<div class="popup" id="popup-diretores">
 				<div class="wrap">
 					<div class="fechar"></div>
-					<div class="accordion">
-						{% for director, movies in director_d%}
-						<!--.lista-de-titulos-->
-						<h3 class="clearfix"><a href="#">{{director}}</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
+					<div class="popup-scroll">
+						<div class="accordion">
+							{% for director, movies in director_d%}
+							<!--.lista-de-titulos-->
+							<h3 class="clearfix"><a href="#">{{director}}</a><div class="exibir"></div></h3>
+							<div>
+								<ul>
 
-							{% for movie in movies %}
-								<li>{{movie.name}}</li>
+								{% for movie in movies %}
+									<li data-movie-index="{{movie.id}}">{{movie.name}}</li>
+								{% endfor %}
+								</ul>
+							</div>
 							{% endfor %}
-							</ul>
 						</div>
-						{% endfor %}
+						<!-- .accordion -->
 					</div>
-					<!-- .accordion -->
+					<!-- .popup-scroll -->
 					<div class="scroll-bar">
-						<div class="scroll-handler">
+						<div class="scroll-handler"><div></div>
 						</div>
 					</div>
 					<!-- .scroll-bar -->
@@ -68,22 +74,25 @@
 			<div class="popup" id="popup-atores">
 				<div class="wrap">
 					<div class="fechar"></div>
-					<div class="accordion">
-						{% for star, movies in star_d %}
-						<!--.lista-de-titulos-->
-						<h3 class="clearfix"><a href="#">{{star}}</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								{% for movie in movies %}
-									<li>{{movie.name}}</li>
-								{% endfor %}
-							</ul>
+					<div class="popup-scroll">
+						<div class="accordion">
+							{% for star, movies in star_d %}
+							<!--.lista-de-titulos-->
+							<h3 class="clearfix"><a href="#">{{star}}</a><div class="exibir"></div></h3>
+							<div>
+								<ul>
+									{% for movie in movies %}
+										<li data-movie-index="{{movie.id}}">{{movie.name}}</li>
+									{% endfor %}
+								</ul>
+							</div>
+							{% endfor %}
 						</div>
-						{% endfor %}
+						<!-- .accordion -->
 					</div>
-					<!-- .accordion -->
+					<!-- .popup-scroll -->
 					<div class="scroll-bar">
-						<div class="scroll-handler">
+						<div class="scroll-handler"><div></div>
 						</div>
 					</div>
 					<!-- .scroll-bar -->
@@ -95,22 +104,25 @@
 			<div class="popup" id="popup-paises">
 				<div class="wrap">
 					<div class="fechar"></div>
-					<div class="accordion">
-						{% for country, movies in country_d %}
-						<!--.lista-de-titulos-->
-						<h3 class="clearfix"><a href="#">{{country}}</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-							{% for movie in movies %}
-								<li>{{movie.name}}</li>
-							{% endfor%}
-							</ul>
+					<div class="popup-scroll">
+						<div class="accordion">
+							{% for country, movies in country_d %}
+							<!--.lista-de-titulos-->
+							<h3 class="clearfix"><a href="#">{{country}}</a><div class="exibir"></div></h3>
+							<div>
+								<ul>
+								{% for movie in movies %}
+									<li data-movie-index="{{movie.id}}">{{movie.name}}</li>
+								{% endfor%}
+								</ul>
+							</div>
+							{% endfor %}
 						</div>
-						{% endfor %}
+						<!-- .accordion -->
 					</div>
-					<!-- .accordion -->
+					<!-- .popup-scroll -->
 					<div class="scroll-bar">
-						<div class="scroll-handler">
+						<div class="scroll-handler"><div></div>
 						</div>
 					</div>
 					<!-- .scroll-bar -->
@@ -122,22 +134,25 @@
 			<div class="popup" id="popup-generos">
 				<div class="wrap">
 					<div class="fechar"></div>
-					<div class="accordion">
-					{% for genre, movies in genre_d %}
-						<!--.lista-de-titulos-->
-						<h3 class="clearfix"><a href="#">{{genre}}</a><div class="exibir"></div></h3>
-						<div>
-							<ul>
-								{% for movie in movies %}
-								<li>{{movie.name}}</li>
-								{% endfor %}
-							</ul>
+					<div class="popup-scroll">
+						<div class="accordion">
+						{% for genre, movies in genre_d %}
+							<!--.lista-de-titulos-->
+							<h3 class="clearfix"><a href="#">{{genre}}</a><div class="exibir"></div></h3>
+							<div>
+								<ul>
+									{% for movie in movies %}
+									<li data-movie-index="{{movie.id}}">{{movie.name}}</li>
+									{% endfor %}
+								</ul>
+							</div>
+						{% endfor %}
 						</div>
-					{% endfor %}
+						<!-- .accordion -->
 					</div>
-					<!-- .accordion -->
+					<!-- .popup-scroll -->
 					<div class="scroll-bar">
-						<div class="scroll-handler">
+						<div class="scroll-handler"><div></div>
 						</div>
 					</div>
 					<!-- .scroll-bar -->
@@ -321,7 +336,7 @@
 						
 						{% for clip in clips %}
 						
-							<div class="ficha clearfix"  data-clipid="{{clip.id}}">
+							<div class="ficha clearfix" data-clipid="{{clip.id}}">
 								{% if clip.cover %}
 									<img src="/static/thumbs/{{clip.id}}.jpg" alt="{{clip.name}}" />
 								{% else %}
@@ -389,9 +404,9 @@
 						
 						{% for clip in clips %}
 							{% if clip.cover %}
-								<img id="img-{{clip.id}}" src="/static/thumbs/{{clip.id}}-pequena.jpg" alt=""  data-clipid="{{clip.id}}"/>
+								<img id="img-{{clip.id}}" src="/static/thumbs/{{clip.id}}-pequena.jpg" alt=""  data-clipid="{{clip.id}}" data-movie-index="{{forloop.counter}}"/>
 							{% else %}
-					                        <img id="img-{{clip.id}}" src="/static/thumbs/3-pequena.jpg" alt="" data-clipid="{{clip.id}}"/>
+								<img id="img-{{clip.id}}" src="/static/thumbs/3-pequena.jpg" alt="" data-clipid="{{clip.id}}" data-movie-index="{{forloop.counter}}"/>
 							{% endif %}
 						{% endfor %}
 					</div>
@@ -401,7 +416,7 @@
 				<!-- #cenas -->
 				<a id="scroll-down" class="scroll-down" href="#">down</a>
 				<div class="scroll-bar">
-					<div id="scroll-handler" class="scroll-handler">
+					<div id="scroll-handler" class="scroll-handler"><div></div>
 					</div>
 				</div>
 				<!-- .scroll-bar -->

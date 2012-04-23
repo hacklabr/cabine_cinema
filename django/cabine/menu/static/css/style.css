@@ -185,17 +185,18 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 /* =Scroller
 -------------------------------------------------------------- */
 .scroll-bar { float: left; width: 14px; padding: 1px 0; border-radius: 7px; }
-.scroll-handler { position: relative; width: 12px; margin: 0 auto; background: #f7931e; border-radius: 6px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80) inset, 1px 1px 0 rgba(0, 0, 0, 0.4); }
+.scroll-handler { position: relative; width: 12px; margin: 0 -20px; padding: 0 21px; }
+.scroll-handler div { width: 12px; margin: 0; height:50px; background: #f7931e; border-radius: 6px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80) inset, 1px 1px 0 rgba(0, 0, 0, 0.4); }
 
 /* =Menu de cenas
 -------------------------------------------------------------- */
 #menu-de-cenas { position: relative; text-align: center; }
-#cenas { width: 300px; height: 1080px; overflow: hidden; margin-right: 20px; float: left; }
-#cenas-content {  z-index: 5; top: 0; margin-left:20px; padding-top:517px; padding-bottom:395px; width: 300px;  background: url(/static/img/pelicula.png) repeat-y; }
+#cenas {position:relative; width: 300px; height: 1080px; overflow: hidden; margin-right: 20px; float: left; }
+#cenas-content { position:absolute; z-index: 5; top: 0; margin-left:0px; padding-top:517px; padding-bottom:395px; width: 300px;  background: url(/static/img/pelicula.png) repeat-y; }
 #cenas-content img { display: block; margin: 0 auto 12px; }
 /*scroll*/
 #menu-de-cenas .scroll-bar { height: 1062px; margin: 8px 3px; background: #333; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80), 0 0 5px rgba(0, 0, 0, 0.7) inset; }
-#menu-de-cenas .scroll-handler { height: 100px; }
+
 .scroll-up, .scroll-down { position: absolute; z-index: 10; left: 66px; display: block; height: 50px; width: 208px; margin: auto; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80) inset, 1px 1px 0 rgba(0, 0, 0, 0.4); text-indent: -9999px; }
 .scroll-up { top: 0; background: #f7931e url(/static/img/up.png) no-repeat center; border-radius: 0 0 4px 4px; }
 .scroll-down { bottom: 0; background: #f7931e url(/static/img/down.png) no-repeat center; border-radius: 4px 4px 0 0; }
@@ -211,7 +212,8 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 #creditos p { line-height: 16px; margin-bottom: 15px; color: #333; }
 #creditos p .label { font-size: 10px; }
 #creditos #regua-de-logos { padding-top: 20px; border-top: 1px solid #ccc; }
-.accordion { float: left; width: 980px; height: 738px; margin-top: 50px; overflow: hidden; }
+.popup-scroll { float:left; width: 980px; height: 738px; overflow: hidden;}
+.accordion {  width: 980px; margin-top: 50px; margin-left: 25px;}
 .accordion h3 { margin-bottom: 3px; padding: 0 10px; background: url(/static/img/bg-filtros.png); border-radius: 4px; line-height: 40px; }
 .accordion h3 a { display: block; float: left; width: 930px; color: #fff; text-shadow: none; text-decoration: none; }
 .accordion h3 div { float: left; width: 20px; height: 20px; margin: 10px 0 10px 10px; }
@@ -222,5 +224,5 @@ blockquote cite, blockquote em, blockquote i { font-style: normal; }
 .accordion ul li { padding: 10px; margin-bottom: 3px; background: #f0f0f0; border-radius: 4px; cursor: pointer; }
 /*scroll*/
 .popup .scroll-bar { height: 738px; margin: 50px 0 0 23px; background: #ccc; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.80), 0 0 5px rgba(0, 0, 0, 0.3) inset; }
-.popup .scroll-handler { height: 100px; }
+
 div.accordion > div { display: none; }
