@@ -8,14 +8,35 @@ var origin = [ 50, 50 ];
 var speed = 1;
 var intervalo_iterator_max = fps * intervalo_start;
 
+var timeout_delay = 15;
+
 $(document).ready(function() {
 
 	$('.accordion > h3').click(function() {
         var button = $(this).find('div');
         if (button.hasClass('ocultar')) {
-            button.removeClass('ocultar').addClass('exibir').parents('h3').next().slideUp();
+            button.removeClass('ocultar').addClass('exibir').parents('h3').next().slideUp(function(){
+				var top = parseInt($(this).parent().css('top'));
+				adjustPopupScrollBar($(this).parent().parent().parent().parent().get());
+				$(this).parent().parent().jScroll({
+					hScroll: false,
+					vScrollbar: false,
+					useTransform: false,
+					y: top
+				});
+			});
         } else {
-            button.removeClass('exibir').addClass('ocultar').parents('h3').next().slideDown();
+            button.removeClass('exibir').addClass('ocultar').parents('h3').next().slideDown(function(){
+				var top = parseInt($(this).parent().css('top'));
+				adjustPopupScrollBar($(this).parent().parent().parent().parent().get());
+				
+				$(this).parent().parent().jScroll({
+					hScroll: false,
+					vScrollbar: false,
+					useTransform: false,
+					y: top
+				});
+			});
         }
     });
     
@@ -74,31 +95,101 @@ $(document).ready(function() {
 		clearTimeout(contagem);
 		anda_fila_e_toca_video();
 	});
+
+	var popup_interval;
 	
 	$('.openpopup').click(function() {
 		
         var pop = $(this).attr('id').replace('-button', '');
         var is_opened = $('#popup-'+pop).is(':visible');
         
-        $('.popup').hide();
+		if(is_opened)
+			$('.popup').fadeOut('fast');
+		else
+			$('.popup').hide();
+		
         $('.openpopup').removeClass('ativo');
         
-        if (is_opened)
+		clearInterval(popup_interval);
+        
+		if (is_opened)
             return;
         
 		$(this).addClass('ativo');
-		$('#popup-'+pop).fadeIn('fast');
+		var popup = $('#popup-'+pop).get();
+		var $sbar = $()
+		
+		$(popup).fadeIn('fast').find('.popup-scroll').jScroll({
+			hScroll: false,
+			vScrollbar: false,
+			useTransform: false
+		});
+		
+		
+		
+		
+		/** scroll dos popups **/
+		var last_scroll_top, last_content_top = 0;
+		
+		popup_interval = setInterval(function(){
+			var new_content_top, new_scroll_top, ratio;
+			
+			var content_top = parseInt($(popup).find('.accordion').css('top'));
+			var content_scroll_height = $(popup).find('.accordion').outerHeight() - $(popup).find('.popup-scroll').height();
+			
+			var scroll_top = parseInt($(popup).find('.scroll-handler').css('top'));
+			var scroll_scroll_height = $(popup).find('.scroll-bar').height() - $(popup).find('.scroll-handler').outerHeight();
+			
+			if(content_top != last_content_top){
+				ratio = content_top / content_scroll_height;
+				last_scroll_top = new_scroll_top = parseInt(scroll_scroll_height * -ratio);
+				last_content_top = parseInt(content_top);
+				$(popup).find('.scroll-handler').css('top', new_scroll_top);
+				
+			}else if(scroll_top != last_scroll_top){
+				ratio = scroll_top / scroll_scroll_height;
+				last_content_top = new_content_top = parseInt(content_scroll_height * -ratio);
+				last_scroll_top = parseInt(scroll_top);
+				$(popup).find('.accordion').css('top',new_content_top);
+			}
+			
+			adjustPopupScrollBar(popup);
+		}, timeout_delay);
+	});
+	
+	$('.popup li').click(function(){
+		var index = $(this).data('movie-index');
+		$('.openpopup').removeClass('ativo');
+		$('.popup').fadeOut('fast');
+		$('#img-'+index).click();
+	});
+	
+	$('.popup').each(function(){
+		adjustPopupScrollBar(this);
+		
+		$(this).find('.scroll-handler').draggable({
+			axis: 'y', 
+			drag: function(){
+				if(parseInt($(this).css('top')) < 0){
+					$(this).css('top', 0);
+					return false;
+				}else if(parseInt($(this).css('top')) > $(this).parent().height() - $(this).height()){
+					$(this).css('top', $(this).parent().height() - $(this).height());
+					return false;
+				}
+			}
+		});
 	});
 	
 	$('.fechar').click(function() {
 		$('.popup').fadeOut('fast', function() {
             $('.openpopup').removeClass('ativo');
+			clearInterval(popup_interval);
         });
 		
 	});
 	
-	
-	/** scroll **/
+	/** scroll das cenas e fichas**/
 	
 	$('#cenas').mousedown(function(){
 		$('#selecao').hide();
@@ -110,9 +201,7 @@ $(document).ready(function() {
 	
 	
 	
-	$(document.body).disableSelection();
-	
-	var timeout_delay = 17;
+	$(document).disableSelection();
 	
 	var $sbar = $('#scroll-handler');
 	var $cenas = $('#cenas');
@@ -127,13 +216,21 @@ $(document).ready(function() {
 	var last_cenas_top, last_fichas_top, last_sbar_top = 0;
 	
 	var scrolling = false;
+	var clicked = false;
 	var in_animate = false;
 	var mousedown = false;
+	
+	var selected_clip = 0;
+	
+	var num_cenas = $('#cenas-content img').length;
+	
+	var stop = false;
 	
 	$(window).load(function(){
 		fichas_height = $('#fichas-content').outerHeight() - $('#fichas').height();
 		cenas_height = $('#cenas-content').outerHeight() - $('#cenas').height();
 	})
+	
 	
 	setInterval(function(){
 		var p, new_fichas_top, new_cenas_top, new_sbar_top;
@@ -171,7 +268,6 @@ $(document).ready(function() {
 			
 		}else if(sbar_top != last_sbar_top){
 			scrolling = true;
-			scrolling = true;
 			p = sbar_top/sbar_height;
 			new_cenas_top = -parseInt(cenas_height*p);
 			new_fichas_top = -parseInt(fichas_height*p);
@@ -183,26 +279,51 @@ $(document).ready(function() {
 			last_fichas_top = new_fichas_top;
 			last_sbar_top = sbar_top;
 			
-		}else if(scrolling && !mousedown){
+		}else if(scrolling && !mousedown || stop){
+			stop = false;
 			// on stop scrolling event
-			var i = Math.round(cenas_top/snap_cena);
-			
 			if(!in_animate){
+				
+				var i = Math.round(cenas_top/snap_cena);
+				var current_top = parseInt($('#cenas-content').css('top'));
 				in_animate = true;
-				console.log('animate', (i*snap_cena));
-				i = i <= -$('#cenas-content img').length ? -$('#cenas-content img').length + 1 : i;
+				i = i <= -num_cenas ? -num_cenas + 1 : i;
 				i = i > 0 ? 0 : i;
-				$('#cenas-content').animate({top:(i*snap_cena)}, 'slow', function(){
-					scrolling = false;
-					in_animate = false;
-					console.log('on_scroll');
-				});
+				var top = i*snap_cena;
+				if(current_top != top){
+					$('#cenas-content').animate({top: top}, 'slow', function(){
+						in_animate = false;
+						selected_clip = -i;
+						scrolling = false;
+					});
+				}
 			}
 			
+		}else if(scrolling || in_animate){
+			scrolling = false;
+			in_animate = false;
 		}
 	},timeout_delay);
 	
-	$('#cenas, #main-section').mousedown(function(){
+	
+	$('#cenas-content img').click(function(){
+		var i = $(this).data('movie-index')-1;
+		var top = (-i*snap_cena);
+		if(!scrolling || clicked){
+			clicked = true;
+			in_animate = true;
+			
+			$('#cenas-content').stop().animate({top:top}, 'slow', function(){
+				scrolling = false;
+				in_animate = false;
+				clicked = false;
+			});
+		
+			selected_clip = i;
+		}
+	});
+	
+	$(document).mousedown(function(){
 		mousedown = true;
 	}).mouseup(function(){
 		mousedown = false;
@@ -214,132 +335,66 @@ $(document).ready(function() {
 			scrolling = true;
 			in_animate = true;
 			
-			if(parseInt($(this).css('top')) < 0)
+			if(parseInt($(this).css('top')) < 0){
+				$(this).css('top', 0);
 				return false;
-			else if(parseInt($(this).css('top')) > sbar_height)
+			}else if(parseInt($(this).css('top')) > $(this).parent().height() - $(this).height()){
+				$(this).css('top', $(this).parent().height() - $(this).height());
 				return false;
+			}
 		},
 		stop: function(){
 			in_animate = false;
+			mousedown = false;
+			stop = true;
 		}
 	});
 	
-	$('#cenas-content').data('selected-clip',0);
-	
-	$("#fichas").jScroll({
-		hScroll: false,
-		vScrollbar: false,
-		useTransform: false
-		
-	});
-	$("#cenas").jScroll({
-		hScroll: false,
-		vScrollbar: false,
-		useTransform: false
-		
-	});
-	return ;
-	
-	
-	
-	$('#cenas-content img').click(function(){
-		var h = 168;
-		var i = $(this).data('clipid')-1;
-		var top = (-i*h);
-		
-		clearInterval(fichas_interval);
-		$('#cenas-content').stop().animate({top: top},'slow');
-		$('#cenas-content').data('selected-clip',i);
-	});
-	
-	$("#fichas").jScroll({
-		hScroll: false,
-		vScrollbar: false,
-		useTransform: false,
-		
-		onScrollStart: function(){
-			clearInterval(fichas_interval);
-			clearInterval(cenas_interval);
-			
-			var height = $('#fichas-content').outerHeight() - $('#fichas').height();
-			var _height = $('#cenas-content').outerHeight() - $('#cenas').height();
-			
-			fichas_interval = setInterval(function(){
-				var scroll = parseInt(document.getElementById('fichas-content').style.top);
-				var p = scroll/height;
-				var t = _height*p
-				
-				$sbar.css('top',-sbar*p);
-				document.getElementById('cenas-content').style.top = t+'px';
-			}, timeout_delay);
-		},
-		onScrollEnd: function(){
-			var h = 620;
-			var scroll = parseInt($('#fichas-content').css('top'));
-			var i = Math.round(scroll/h);
-			var snap = i*h;
-			$('#cenas-content').data('selected-clip',-i);
-			if(snap != scroll){
-				$('#fichas-content').animate({top:snap},'slow',function(){
-					clearInterval(fichas_interval);
-				});
-			}else{
-				clearInterval(fichas_interval);
-			}
-		}
-	});
-	
-	
-	$("#cenas").jScroll({
-		hScroll: false,
-		vScrollbar: false,
-		useTransform: false,
+	$(window).load(function(){
+		$("#fichas").jScroll({
+			hScroll: false,
+			vScrollbar: false,
+			useTransform: false
 
-		onScrollStart: function(){
-			clearInterval(cenas_interval);
-			clearInterval(fichas_interval);
-			var height = $('#cenas-content').outerHeight() - $('#cenas').height();
-			var _height = $('#fichas-content').outerHeight() - $('#fichas').height();
-			
-			cenas_interval = setInterval(function(){
-				var scroll = parseInt(document.getElementById('cenas-content').style.top);
-				var p = scroll/height;
-				var t = _height*p
-				$sbar.css('top',-sbar*p);
-				document.getElementById('fichas-content').style.top = t+'px';
-			}, timeout_delay);
-		},
-		onScrollEnd: function(){
-			var h = 168;
-			var scroll = parseInt($('#cenas-content').css('top'));
-			var i = Math.round(scroll/h);
-			$('#cenas-content').data('selected-clip',-i);
-			$('#cenas-content').animate({top:(i*h)},'slow',function(){
-				clearInterval(cenas_interval);
-				
-			});
-		}
+		});
+		$("#cenas").jScroll({
+			hScroll: false,
+			vScrollbar: false,
+			useTransform: false
+
+		});
 	});
+	
+	
+	
+	
 	
 	$('#scroll-up').click(function(){
-		var i = $('#cenas-content').data('selected-clip') -1;
+		var i = selected_clip -1;
 		i = i >= 0 ? i : 0;
-		var h = 168;
-		clearInterval(fichas_interval);
-		$('#cenas-content').stop().animate({top:(-i*h)},'slow');
-		$('#cenas-content').data('selected-clip',i);
+		
+		$('#cenas-content').stop().animate({top:(-i*snap_cena)}, 'slow', function(){
+			scrolling = false;
+			in_animate = false;
+			
+		});
+		selected_clip = i;
 	});
 	
 	$('#scroll-down').click(function(){
-		var i = $('#cenas-content').data('selected-clip') +1;
-		console.log(i);
-		i = i >= 0 ? i : 0;
-		var h = 168;
-		clearInterval(fichas_interval);
-		clearInterval(fichas_interval);
-		$('#cenas-content').stop().animate({top:(-i*h)},'slow');
-		$('#cenas-content').data('selected-clip',i);
+		var i = selected_clip +1;
+		i = i >= num_cenas - 1 ? num_cenas - 1 : i;
+		
+		$('#cenas-content').stop().animate({top:(-i*snap_cena)}, 'slow', function(){
+			scrolling = false;
+			in_animate = false;
+			
+		});
+		selected_clip = i;
+		
 	});
+	
+	
 });
 	
 
@@ -360,7 +415,7 @@ function monitorar_fila() {
             }
 
 
-            console.log(playing,fazendo_contagem_regressiva );
+            //console.log(playing,fazendo_contagem_regressiva );
             // se não tem nada tocando
             if (!playing && !fazendo_contagem_regressiva) {
 
@@ -551,5 +606,16 @@ function remover_da_fila(posicao) {
 	
 }
 
+
+function adjustPopupScrollBar(popup){
+	var inner_height = $(popup).find('.accordion').outerHeight();
+	var outer_height = $(popup).find('.popup-scroll').height();
+	var sbar_height = $(popup).find('.scroll-bar').height();
+
+	var ratio = (outer_height/inner_height);
+	ratio = ratio > 1 ? 1 : ratio;
+
+	$(popup).find('.scroll-handler div').css('height',sbar_height*ratio);
+}
 
 window.setInterval('monitorar_fila()', 1000);
