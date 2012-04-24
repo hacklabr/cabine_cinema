@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^$', 'menu.views.index', name='index'),
     url(r'^enqueue/(?P<clip_id>\d+)/?$', 'menu.views.enqueue'),
     url(r'^status/', 'menu.views.status'),
+    url(r'^clear_waiting/', 'menu.views.clear_waiting'),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve',

@@ -1,7 +1,7 @@
 var fazendo_contagem_regressiva = false;
 var contagem;
 var radius = 40;
-var intervalo_start = 3;
+var intervalo_start = 15;
 var fps = 25;
 var intervalo_iterator = 1;
 var origin = [ 50, 50 ];
@@ -410,6 +410,18 @@ function monitorar_fila() {
             playing_status = data;
             if (playing_status == "idle"){
                 playing = false;
+            } else if (playing_status == 'waiting') {
+                if (waiting === false) {
+                    waiting == Date.now();
+                } else {
+                    // Se está retornando waiting há muito tempo, vamos em frente...
+                    if (Date.now() - waiting > 8000) {
+                        $.get('/clear_waiting/', function() {}
+                            anda_fila_e_toca_video();
+                        );
+                        
+                    }
+                }
             }else{
                 playing = true;
             }

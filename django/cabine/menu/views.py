@@ -69,6 +69,9 @@ def status(request):
         else:
             return HttpResponse("idle")
 
+def clear_waiting(request):    
+    if os.path.exists("/tmp/waiting"):
+        os.unlink("/tmp/waiting")
 
 
 def clean_object(object_list):
