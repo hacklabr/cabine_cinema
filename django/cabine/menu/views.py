@@ -39,7 +39,8 @@ def enqueue(request, clip_id):
     clip.save()
     entry = Log(clip=clip,date=datetime.now())
     entry.save()
-    os.system("echo 'loadfile %s' > %s" % (clip.file_path, FIFO))
+    os.system("echo 'loadfile %s/%s.mp4' > %s" % ("/home/cabine/Videos/", clip_id  , FIFO))
+    os.system("echo 'vo_fullscreen 1' > %s" % FIFO)
     os.system("touch /tmp/waiting")
     
     return HttpResponse(True)
