@@ -233,7 +233,7 @@
 			<section id="playlist" class="clearfix">
 				<h1>Cabine de Cinema</h1>
 				
-				<div id="tocando" data-clip="0">
+				<div id="tocando" data-clip="0" class="vazio">
 					<h2>Em Cartaz</h2>
 									
 				</div>
@@ -259,7 +259,7 @@
                     <!-- #intervalo-content -->				
 				</div>
 				<!-- .intervalo -->				
-                <div id="proximo_1" class="em-breve" data-clip="0">
+                <div id="proximo_1" class="em-breve vazio" data-clip="0">
 					<h2>Próxima</h2>
 					
                     <div class="remover" id="remover_1">
@@ -270,7 +270,7 @@
 				</div>
 				<!-- #proximo_1 -->
                 
-                <div  id="proximo_2" class="em-breve" data-clip="0">
+                <div  id="proximo_2" class="em-breve vazio" data-clip="0">
 					<h2>Em Breve</h2>
 					
 					<div class="remover" id="remover_2">
@@ -322,11 +322,9 @@
 						{% for clip in clips %}
 						
 							<div class="ficha clearfix"  data-clipid="{{clip.id}}">
-								{% if clip.cover %}
-									<img src="/static/thumbs/{{clip.id}}.jpg" alt="{{clip.name}}" />
-								{% else %}
-									<img src="/static/thumbs/3.jpg" alt="{{clip.name}}" />
-								{% endif %}
+								
+									<img src="{{clip.cover_path}}" alt="{{clip.name}}" />
+								
 								<div class="info">
 									<h2>{{clip.name}}</h2>
 									<p>
@@ -362,7 +360,7 @@
 										<span class="label">Classificação Indicativa</span><br />
 										{{clip.classificacao}}
 									</p>
-									<a id='adicionar-clip-{{clip.id}}' class="adicionar" data-clipid="{{clip.id}}">Colocar na Fila</a>
+									<a id='adicionar-clip-{{clip.id}}' class="adicionar" data-clipid="{{clip.id}}" data-thumb_path="{{clip.medium_cover_path}}">Colocar na Fila</a>
 								</div>
 								<!-- .info -->
 							</div>
@@ -388,11 +386,7 @@
 					<div id="cenas-content">
 						
 						{% for clip in clips %}
-							{% if clip.cover %}
-								<img id="img-{{clip.id}}" src="/static/thumbs/{{clip.id}}-pequena.jpg" alt=""  data-clipid="{{clip.id}}"/>
-							{% else %}
-					                        <img id="img-{{clip.id}}" src="/static/thumbs/3-pequena.jpg" alt="" data-clipid="{{clip.id}}"/>
-							{% endif %}
+                            <img id="img-{{clip.id}}" src="{{clip.small_cover_path}}" alt=""  data-clipid="{{clip.id}}"/>
 						{% endfor %}
 					</div>
 					<!-- #cenas-content -->					
