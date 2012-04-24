@@ -1,0 +1,10 @@
+#!/bin/bash
+#export DISPLAY=:0.0 
+#mplayer -idle -fs COUNTDOWN.mp4 & 
+
+cabine_cinema/django/cabine/manage.py runserver &
+sleep 20 
+
+
+export DISPLAY=:0.1 
+chromium-browser --kiosk http://localhost:8000
