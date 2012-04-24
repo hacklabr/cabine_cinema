@@ -1,0 +1,4 @@
+http://people.canonical.com/~bradf/lp791833/linux-tools-3.2.0-20_3.2.0-20.33~lp791833_amd64.deb
+http://people.canonical.com/~bradf/lp791833/linux-image-3.2.0-20-generic_3.2.0-20.33~lp791833_amd64.deb
+http://people.canonical.com/~bradf/lp791833/linux-headers-3.2.0-20-generic_3.2.0-20.33~lp791833_amd64.deb
+
