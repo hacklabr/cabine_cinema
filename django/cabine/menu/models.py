@@ -23,24 +23,29 @@ class Clip(models.Model):
     count = models.IntegerField(max_length=100000, verbose_name="Total de reproduções")
 
     def verifica_capa(self):
-        cover_path = "/static/thumbs/{0}.jpg".format(self.id)
-        medium_cover_path = "/static/thumbs/{0}-media.jpg".format(self.id)
-        small_cover_path = "/static/thumbs/{0}-pequena.jpg".format(self.id)
+        
+        clip_id = str(self.id)
+        if (self.id < 10):
+            clip_id = "0"+clip_id
+        
+        cover_path = "/static/thumbs/{0}_grande.jpg".format(clip_id)
+        medium_cover_path = "/static/thumbs/{0}_media.jpg".format(clip_id)
+        small_cover_path = "/static/thumbs/{0}_pequena.jpg".format(clip_id)
         
         if os.path.exists(settings.path + "/menu/" + cover_path):
             self.cover_path = cover_path            
         else:
-            self.cover_path = "{0}.jpg".format("/static/thumbs/default")
+            self.cover_path = "{0}_grande.jpg".format("/static/thumbs/default")
 
         if os.path.exists(settings.path + "/menu/" + medium_cover_path):
             self.medium_cover_path = medium_cover_path            
         else:
-            self.medium_cover_path = "{0}-media.jpg".format("/static/thumbs/default")
+            self.medium_cover_path = "{0}_media.jpg".format("/static/thumbs/default")
             
         if os.path.exists(settings.path + "/menu/" + small_cover_path):
             self.small_cover_path = small_cover_path            
         else:
-            self.small_cover_path = "{0}-pequena.jpg".format("/static/thumbs/default")
+            self.small_cover_path = "{0}_pequena.jpg".format("/static/thumbs/default")
         
         self.save()    
             
