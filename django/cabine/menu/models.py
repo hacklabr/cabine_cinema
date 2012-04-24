@@ -13,20 +13,37 @@ class Clip(models.Model):
     file_path = models.CharField(verbose_name='Caminho do arquivo', max_length = 300)
     genre = models.ManyToManyField('Genre', null=True, blank=True, verbose_name='Gênero')
     director = models.ManyToManyField('Director', null=True, blank=True, verbose_name='Diretor')
-    country = models.ForeignKey('Country', null=True, blank=True, verbose_name='País')
+    country = models.ManyToManyField('Country', null=True, blank=True, verbose_name='País')
     year = models.ForeignKey('Year',null=True, blank=True, verbose_name='Ano de lançamento')
     star = models.ManyToManyField('Star', null=True, blank=True, verbose_name='Estrelas')
     cover = models.BooleanField(verbose_name="Tem capa em arquivo")
+    #cover_path = models.BooleanField(verbose_name="Tem capa em arquivo")
+    #medium_cover_path = models.BooleanField(verbose_name="Tem capa em arquivo")
+    #small_cover_path = models.BooleanField(verbose_name="Tem capa em arquivo")
     count = models.IntegerField(max_length=100000, verbose_name="Total de reproduções")
 
     def verifica_capa(self):
-        if os.path.exists("%s/%s/%s.jpg" % ( settings.path,  "/menu/static/thumbs/", self.id)):
-            self.cover = True
-	    self.save()
-	else:
-	    self.cover = False
-	    self.save()  	
+        cover_path = "/static/thumbs/{0}.jpg".format(self.id)
+        medium_cover_path = "/static/thumbs/{0}-media.jpg".format(self.id)
+        small_cover_path = "/static/thumbs/{0}-pequena.jpg".format(self.id)
+        
+        if os.path.exists(settings.path + "/menu/" + cover_path):
+            self.cover_path = cover_path            
+        else:
+            self.cover_path = "{0}.jpg".format("/static/thumbs/default")
 
+        if os.path.exists(settings.path + "/menu/" + medium_cover_path):
+            self.medium_cover_path = medium_cover_path            
+        else:
+            self.medium_cover_path = "{0}-media.jpg".format("/static/thumbs/default")
+            
+        if os.path.exists(settings.path + "/menu/" + small_cover_path):
+            self.small_cover_path = small_cover_path            
+        else:
+            self.small_cover_path = "{0}-pequena.jpg".format("/static/thumbs/default")
+        
+        self.save()    
+            
 
     def __unicode__(self):
         return self.name

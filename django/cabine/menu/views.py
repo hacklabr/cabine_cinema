@@ -10,6 +10,10 @@ FIFO = "/tmp/fifo"
 
 def index(request):
     clips = Clip.objects.all()
+    
+    for clip in clips:
+        clip.verifica_capa()
+    
     director_d = sortHash(movieHash(Director))
     genre_d = sortHash(movieHash(Genre))
     country_d = sortHash(movieHash(Country))

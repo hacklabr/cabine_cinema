@@ -2,7 +2,7 @@ from django.contrib import admin
 from menu.models import Clip, Director, Country, Year, Genre, Star, Log
 
 class ClipAdmin(admin.ModelAdmin):
-    list_display = ('name','orig_name', 'sinopse', 'year', 'country')
+    list_display = ('name','orig_name', 'sinopse', 'year')
     ordering = ('name',)
 
 class DirectorAdmin(admin.ModelAdmin):

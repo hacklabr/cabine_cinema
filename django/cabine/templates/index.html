@@ -354,7 +354,7 @@
 									</p>
 									<p>
 										<span class="label">País</span><br />
-										{{clip.country}}
+                                        {{clip.country.all|join:', '}}
 									</p>
 									<p>
 									</p>
@@ -402,7 +402,7 @@
 						
 						{% for clip in clips %}
 
-                            <img id="img-{{clip.id}}" src="{{clip.small_cover_path}}" alt=""  data-clipid="{{clip.id}}"/>
+                            <img id="img-{{clip.id}}" src="{{clip.small_cover_path}}" alt=""  data-clipid="{{clip.id}}" data-movie-index="{{forloop.counter}}"/>
 
 						{% endfor %}
 					</div>

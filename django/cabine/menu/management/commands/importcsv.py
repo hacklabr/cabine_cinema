@@ -16,7 +16,7 @@ class Command(NoArgsCommand):
             iid=str(index)
             clip = data[iid]
             print "++ %s ++" % iid
-            c = Clip(id=iid, name=clip["name"], orig_name=clip["orig_name"], sinopse=clip["sinopse"], classificacao=clip["classificacao"])
+            c = Clip(id=iid, name=clip["name"], orig_name=clip["orig_name"], sinopse=clip["sinopse"], classificacao=clip["classificacao"], count=0)
             c.save()
         
             for j in clip["director"].split(','):
@@ -25,10 +25,10 @@ class Command(NoArgsCommand):
                 c.director.add(dire)
                 print "d\r"
 
-            for j in clip["country"].split(','):
+            for j in clip["country"].split('/'):
                 country = j.strip()
                 country = self.query(Country, country)
-                c.country = country
+                c.country.add(country)
                 print "c\r"
 
             for j in clip["year"].split(','):
@@ -37,7 +37,7 @@ class Command(NoArgsCommand):
                 c.year = year
                 print "y\r"
 
-            for j in clip["genre"].split(','):
+            for j in clip["genre"].split('/'):
                 genre = j.strip()
                 genre = self.query(Genre, genre)
                 c.genre.add(genre)
@@ -45,8 +45,14 @@ class Command(NoArgsCommand):
 
             for j in clip["star"].split(','):
                 star = j.strip()
-                star = self.query(Star, star)
-                c.star.add(star)
+                substars = star.split(' e ')
+                if len(substars) > 1:
+                    for s in substars:
+                        star = self.query(Star, s)
+                        c.star.add(star)
+                else:
+                    star = self.query(Star, star)
+                    c.star.add(star)
                 print "s\r"
 
             c.save()
