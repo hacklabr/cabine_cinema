@@ -62,8 +62,8 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {   
-    awful.layout.suit.floating,
     awful.layout.suit.tile.bottom,
+    awful.layout.suit.floating,
     awful.layout.suit.tile.top,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
@@ -351,8 +351,8 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule = { class = "Chromium" },
-      properties = { floating = true, tag = tags[1][1] } },
+    { rule = { class = "Chromium-browser" },
+      properties = { floating = false, tag = tags[1][1] } },
     { rule = { class = "MPlayer" },
       properties = { floating = true, tag = tags[2][1] } },
     { rule = { class = "pinentry" },
@@ -397,8 +397,10 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 --awful.util.spawn("nautilus -n")
 --awful.util.spawn("qasmixer -t")
 --awful.util.spawn("wicd-gtk -t")
-awful.util.spawn("chromium --kiosk")
-awful.util.spawn("mplayer -fs teste.avi")
+--awful.util.spawn("chromium-browser --kiosk http://localhost:8000")
+awful.util.spawn("/home/cabine/cabine_cinema/player/player.sh")
+awful.util.spawn("/home/cabine/xinit")
+awful.util.spawn("unclutter -idle 0")
 awful.util.spawn("xsetroot")
 -- }}}
 
