@@ -1,4 +1,5 @@
 var fazendo_contagem_regressiva = false;
+var stop_update = false;
 var contagem;
 var radius = 40;
 var intervalo_start = 15;
@@ -7,7 +8,7 @@ var intervalo_iterator = 1;
 var origin = [ 50, 50 ];
 var speed = 1;
 var intervalo_iterator_max = fps * intervalo_start;
-
+var waiting = false;
 var timeout_delay = 15;
 
 $(document).ready(function() {
@@ -393,7 +394,7 @@ $(document).ready(function() {
 		selected_clip = i;
 		
 	});
-	
+    
 	
 });
 	
@@ -402,7 +403,11 @@ $(document).ready(function() {
 function monitorar_fila() {
 	//console.log('monitorando');
 	// faz um ajax e checa um arquivo de texto pra saber se tem algo tocando
-
+    
+    if (stop_update)
+        return;
+    
+    
     $.ajax({
         type: 'GET',
         url: '/status/',
@@ -411,17 +416,30 @@ function monitorar_fila() {
             if (playing_status == "idle"){
                 playing = false;
             } else if (playing_status == 'waiting') {
+                console.log('retornou waitng');
+                console.log('waiting é: ' + waiting);
                 if (waiting === false) {
-                    waiting == Date.now();
+                    waiting = 1;
+                    console.log('waiting é: ' + waiting);
                 } else {
                     // Se está retornando waiting há muito tempo, vamos em frente...
-                    if (Date.now() - waiting > 8000) {
-                        $.get('/clear_waiting/', function() {}
-                            anda_fila_e_toca_video();
-                        );
+                    waiting ++;
+                    console.log('waiting é: ' + waiting);
+                    if (waiting > 8) {
+                        console.log('waiting é maior q 8');
+                        waiting = false;
+                        
+                        $.ajax({
+                            type: 'GET',
+                            url: '/clear_waiting/',
+                            complete: function() {
+                                anda_fila_e_toca_video();
+                            }
+                        });
                         
                     }
                 }
+                playing = true;
             }else{
                 playing = true;
             }
@@ -480,10 +498,17 @@ function anda_fila_e_toca_video() {
 		coloca_filme_na_caixa('#proximo_2', 0);
 		
 		// dá o play no ajax
-
+	//$.ajax({
+	//    type: 'GET',
+	//    url: '/countdown/',
+            	
+        stop_update = true;
         $.ajax({
             type: 'GET',
             url: '/enqueue/'+$("#tocando").data('clip'),
+            complete: function() {
+                stop_update = false;
+            }
         });
 		// Não esquecer de no ajax fazer a contagem dos plays! 
 		// Temos que fazer uma tabela de log com hora e play de todos os videos
@@ -536,6 +561,7 @@ function contagem_regressiva() {
 	
 	// se for zero
 	if (c == 0) {
+        //g('chegou a zero');
 		fazendo_contagem_regressiva = false;
 		anda_fila_e_toca_video();
 		clearTimeout(contagem);

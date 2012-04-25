@@ -19,6 +19,9 @@ def index(request):
     country_d = sortHash(movieHash(Country))
     star_d = sortHash(movieHash(Star))
     
+    if os.path.exists("/tmp/waiting"):
+        os.unlink("/tmp/waiting")
+    
     return render_to_response('index.html', locals())
 
 def movieHash(classe):
@@ -32,6 +35,10 @@ def sortHash(hash):
     lista = sorted(hash.iteritems(), key=operator.itemgetter(1))
     lista.sort()
     return lista
+
+def countdown(request):
+    os.system("echo 'loadfile /home/cabine/COUNTDOWN.mp4' > %s" % FIFO)
+    return HttpResponse(True)
 
 def enqueue(request, clip_id):
     clip = Clip.objects.get(id=clip_id)
@@ -73,6 +80,8 @@ def status(request):
 def clear_waiting(request):    
     if os.path.exists("/tmp/waiting"):
         os.unlink("/tmp/waiting")
+    return HttpResponse(True)
+    
 
 
 def clean_object(object_list):
