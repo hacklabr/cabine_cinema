@@ -1,4 +1,5 @@
 var fazendo_contagem_regressiva = false;
+var count_idle = false;
 var stop_update = false;
 var contagem;
 var radius = 40;
@@ -414,7 +415,17 @@ function monitorar_fila() {
         success: function(data){
             playing_status = data;
             if (playing_status == "idle"){
-                playing = false;
+                if (count_idle === false) {
+                    count_idle = 1;
+                    playing = true;
+                } else {
+                    count_idle ++;
+                    if (count_idle > 3) {
+                        count_idle = false;
+                        playing = false;
+                    }
+                }
+                
             } else if (playing_status == 'waiting') {
                 console.log('retornou waitng');
                 console.log('waiting é: ' + waiting);

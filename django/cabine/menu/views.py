@@ -46,7 +46,10 @@ def enqueue(request, clip_id):
     clip.save()
     entry = Log(clip=clip,date=datetime.now())
     entry.save()
-    os.system("echo 'loadfile %s/%s.mp4' > %s" % ("/home/cabine/Videos/", clip_id  , FIFO))
+    #os.system("echo 'loadfile %s/%s.mp4' > %s" % ("/home/cabine/Videos/", clip_id  , FIFO))
+    os.system("echo \"/home/cabine/COUNTDOWN.mp4\n %s/%s.mp4\" > /tmp/list" % ("/home/cabine/Videos/", clip_id))
+    os.system("echo 'loadlist /tmp/list' > %s" %  FIFO)
+
     os.system("echo 'vo_fullscreen 1' > %s" % FIFO)
     os.system("touch /tmp/waiting")
     
