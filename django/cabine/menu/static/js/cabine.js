@@ -415,29 +415,36 @@ function monitorar_fila() {
         success: function(data){
             playing_status = data;
             if (playing_status == "idle"){
+                //console.log('retornou idle');
+                //console.log('idle é: ' + count_idle);
                 if (count_idle === false) {
                     count_idle = 1;
+                    //console.log('count_idle colocado pra 1: ' + count_idle);
                     playing = true;
                 } else {
+                    //console.log('count_idle não é falso');
                     count_idle ++;
+                    //console.log('idle é: ' + count_idle);
+                    playing = true;
                     if (count_idle > 3) {
+                        //console.log('idle é maior q 3: ' + count_idle);
                         count_idle = false;
                         playing = false;
                     }
                 }
                 
             } else if (playing_status == 'waiting') {
-                console.log('retornou waitng');
-                console.log('waiting é: ' + waiting);
+                //console.log('retornou waitng');
+                //console.log('waiting é: ' + waiting);
                 if (waiting === false) {
                     waiting = 1;
-                    console.log('waiting é: ' + waiting);
+                    //console.log('waiting é: ' + waiting);
                 } else {
                     // Se está retornando waiting há muito tempo, vamos em frente...
                     waiting ++;
-                    console.log('waiting é: ' + waiting);
+                    //console.log('waiting é: ' + waiting);
                     if (waiting > 8) {
-                        console.log('waiting é maior q 8');
+                        //console.log('waiting é maior q 8');
                         waiting = false;
                         
                         $.ajax({
@@ -497,7 +504,7 @@ function carrega_caixas_vazias() {
 }
 
 function anda_fila_e_toca_video() {
-
+    count_idle = false;
 	// se tiver algo na fila
 	if ( $('#proximo_1').data('clip') != 0) {
 		
