@@ -182,6 +182,11 @@ $(document).ready(function() {
 			}
 		});
 	});
+    
+    $('#cenas-content, #playlist, #intervalo, .em-breve, #tocando').mousedown(function() {
+		$('.popup').fadeOut('fast');
+        $('.openpopup').removeClass('ativo');
+    });
 	
 	$('.fechar').click(function() {
 		$('.popup').fadeOut('fast', function() {
