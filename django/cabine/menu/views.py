@@ -67,6 +67,7 @@ def status(request):
         os.mkfifo(FIFO)
 
     os.system("echo 'get_file_name' > %s" % FIFO)
+    os.system("echo 'vo_fullscreen 1' > %s" % FIFO)
     log_line = open("/tmp/mplayer.log","r").read().split('\n')[-2]
 
     if "ANS_FILENAME=" in log_line:
